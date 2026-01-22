@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ButtonClient from "@/components/home/ButtonClient";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +29,20 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+              <div className="relative top-4" >
+
+      <div className="flex  bg-[blur-md] mx-2 justify-between items-center" >
+        <div>logo</div>
+        <div>header</div>
+        <div>
+          <ButtonClient/>
+
+        </div>
+
+      </div>
+      </div>
         {children}
+        <Footer/>
       </body>
     </html>
   );
