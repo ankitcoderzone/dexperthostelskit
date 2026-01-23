@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -11,9 +11,23 @@ export default function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
 
         {/* LOGO */}
-        <Link href="/" className="text-lg font-semibold">
-          Logo
-        </Link>
+        <div className="flex items-center gap-2 ml-0.5">
+          <Image
+            src="/hostelskit.png"
+            alt="logo"
+            width={50}
+            height={50}
+            className="rounded-full"
+            priority
+          />
+
+          <Link
+            href="/"
+            className="text-lg font-semibold whitespace-nowrap"
+          >
+            Department Expert
+          </Link>
+        </div>
 
         {/* DESKTOP NAV */}
         <nav className="hidden md:flex items-center gap-4">
