@@ -1,6 +1,25 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 
 export default function Page() {
   const [formData, setFormData] = useState({
@@ -22,19 +41,10 @@ export default function Page() {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    name: string,
+    value: string | boolean | File | null
   ) => {
-    const { name, value, type } = e.target as HTMLInputElement;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
-    }));
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFormData((prev) => ({ ...prev, file: e.target.files![0] }));
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -44,92 +54,95 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center items-center p-4">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white w-full max-w-3xl rounded-2xl shadow-lg p-6 space-y-5"
-      >
-        <h1 className="text-2xl font-semibold text-center">
-          Department Expert – HostelsKit
-        </h1>
+    <div className="min-h-screen flex items-center justify-center bg-background text-background px-4">
+      <Card className="w-full max-w-3xl bg-background text-foreground border-border shadow-xl">
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl">
+            Department Expert – HostelsKit
+          </CardTitle>
+          <CardDescription className="text-foreground/70">
+            Apply to guide juniors with honest and practical advice
+          </CardDescription>
+        </CardHeader>
 
-        <input className="input" name="name" placeholder="Name" required onChange={handleChange} />
-        <input className="input" name="course" placeholder="Course" required onChange={handleChange} />
-        <input className="input" name="academicYear" placeholder="Academic Year" required onChange={handleChange} />
-        <input className="input" name="mobile" placeholder="Mobile Number" required onChange={handleChange} />
-        <input className="input" name="university" placeholder="University Name" required onChange={handleChange} />
-        <input className="input" name="city" placeholder="City" required onChange={handleChange} />
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Basic Info */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Input className="bg-background text-foreground" placeholder="Name" required onChange={(e) => handleChange("name", e.target.value)} />
+              <Input className="bg-background text-foreground" placeholder="Course" required onChange={(e) => handleChange("course", e.target.value)} />
+              <Input className="bg-background text-foreground" placeholder="Academic Year" required onChange={(e) => handleChange("academicYear", e.target.value)} />
+              <Input className="bg-background text-foreground" placeholder="Mobile Number" required onChange={(e) => handleChange("mobile", e.target.value)} />
+              <Input className="bg-background text-foreground" placeholder="University Name" required onChange={(e) => handleChange("university", e.target.value)} />
+              <Input className="bg-background text-foreground" placeholder="City" required onChange={(e) => handleChange("city", e.target.value)} />
+            </div>
 
-        <textarea className="input" name="reason" placeholder="Why do you want to become a Department Expert?" required onChange={handleChange} />
-        <textarea className="input" name="practicalKnowledge" placeholder="What practical knowledge can you share?" required onChange={handleChange} />
-        <textarea className="input" name="mistakes" placeholder="Common mistakes new students make" required onChange={handleChange} />
+            {/* Gender */}
+            <div className="space-y-2">
+              <Label className="text-foreground">Gender</Label>
+              <Select onValueChange={(value) => handleChange("gender", value)} required>
+                <SelectTrigger className="bg-background text-foreground">
+                  <SelectValue placeholder="Select gender" />
+                </SelectTrigger>
+                <SelectContent className="bg-background text-foreground">
+                  <SelectItem value="Male">Male</SelectItem>
+                  <SelectItem value="Female">Female</SelectItem>
+                  <SelectItem value="Prefer not to say">Prefer not to say</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-        <select name="gender" className="input" required onChange={handleChange}>
-          <option value="">Select Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Prefer not to say">Prefer not to say</option>
-        </select>
+            {/* Text Areas */}
+            <Textarea className="bg-background text-foreground" placeholder="Why do you want to become a Department Expert?" required onChange={(e) => handleChange("reason", e.target.value)} />
+            <Textarea className="bg-background text-foreground" placeholder="What practical knowledge can you share?" required onChange={(e) => handleChange("practicalKnowledge", e.target.value)} />
+            <Textarea className="bg-background text-foreground" placeholder="Common mistakes new students make" required onChange={(e) => handleChange("mistakes", e.target.value)} />
 
-        <div className="space-y-2">
-          <label>Do you agree to provide honest guidance?</label>
-          <select name="agreeGuidance" className="input" required onChange={handleChange}>
-            <option value="">Select</option>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-          </select>
-        </div>
+            {/* Agreements */}
+            <div className="grid gap-4">
+              {[
+                { label: "Do you agree to provide honest guidance?", name: "agreeGuidance" },
+                { label: "Maintain respectful communication?", name: "agreeRespect" },
+                { label: "Allow HostelsKit to review interactions?", name: "agreeReview" },
+              ].map((item) => (
+                <div key={item.name} className="space-y-2">
+                  <Label className="text-foreground">{item.label}</Label>
+                  <Select onValueChange={(value) => handleChange(item.name, value)} required>
+                    <SelectTrigger className="bg-background text-foreground">
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background text-foreground">
+                      <SelectItem value="Yes">Yes</SelectItem>
+                      <SelectItem value="No">No</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              ))}
+            </div>
 
-        <div className="space-y-2">
-          <label>Maintain respectful communication?</label>
-          <select name="agreeRespect" className="input" required onChange={handleChange}>
-            <option value="">Select</option>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-          </select>
-        </div>
+            {/* File Upload */}
+            <div className="space-y-2">
+              <Label className="text-foreground">Upload verification document</Label>
+              <Input type="file" className="bg-background text-foreground" accept="image/*,.pdf" required />
+            </div>
 
-        <div className="space-y-2">
-          <label>Allow HostelsKit to review interactions?</label>
-          <select name="agreeReview" className="input" required onChange={handleChange}>
-            <option value="">Select</option>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-          </select>
-        </div>
+            {/* Confirmation */}
+            <div className="flex items-center space-x-2">
+              <Checkbox />
+              <Label className="text-foreground">
+                I confirm that the information provided is accurate
+              </Label>
+            </div>
 
-        <div className="space-y-2">
-          <label>Upload verification document (PDF/Image)</label>
-          <input type="file" accept="image/*,.pdf" required onChange={handleFileChange} />
-        </div>
+            <p className="text-sm text-foreground/70">
+              This form is an expression of interest. Submission does not guarantee selection.
+            </p>
 
-        <label className="flex items-center gap-2">
-          <input type="checkbox" name="confirmation" required onChange={handleChange} />
-          I confirm that the information provided is accurate
-        </label>
-
-        <p className="text-sm text-gray-500">
-          This form is an expression of interest. Submission does not guarantee selection.
-        </p>
-
-        <button
-          type="submit"
-          className="w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800"
-        >
-          Submit Application
-        </button>
-      </form>
-
-      <style jsx>{`
-        .input {
-          width: 100%;
-          padding: 12px;
-          border-radius: 12px;
-          border: 1px solid #ddd;
-        }
-      `}</style>
+            <Button type="submit" className="w-full hover:bg-gray-300 text-black bg-white ">
+              Submit Application
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }
-
-
