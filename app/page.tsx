@@ -14,7 +14,7 @@ export default function Home() {
             className="rounded-full"
             />   
         <p className=" flex flex-wrap justify-center items-center ">
-          Minimizing the gap between student and department
+          Bridge the gap between student and University Department
         </p>
         <div>
           <ButtonNavigationClient/>

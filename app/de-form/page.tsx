@@ -24,21 +24,33 @@ import { Label } from "@/components/ui/label";
 export default function Page() {
   const [formData, setFormData] = useState({
     name: "",
-    course: "",
-    academicYear: "",
     mobile: "",
-    reason: "",
     university: "",
+    course: "",
     gender: "",
-    city: "",
-    practicalKnowledge: "",
+    is_last_year: "",
+    reason: "",
+    practical_knowledge: "",
     mistakes: "",
-    agreeGuidance: "",
-    agreeRespect: "",
-    agreeReview: "",
+    agree_guidance: "",
+    agree_respect: "",
+    agree_review: "",
     confirmation: false,
-    file: null as File | null,
+    verification_document: null as File | null,
+    department_photo: null as File | null, // ✅ NEW FIELD
   });
+
+  const UNIVERSITY_OPTIONS = {
+    UOA: "University of Allahabad",
+    LU: "Lucknow University",
+  };
+
+  const COURSE_OPTIONS = {
+    BSC: "Bachelor of Science",
+    BA: "Bachelor of Arts",
+    BCA: "Bachelor of Computer Application",
+    BFA: "Bachelor of Fine Arts",
+  };
 
   const handleChange = (
     name: string,
@@ -47,15 +59,37 @@ export default function Page() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    alert("Form submitted successfully");
+
+    const form = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value !== null) {
+        form.append(key, value as any);
+      }
+    });
+
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+
+    const res = await fetch(
+      `${API_BASE_URL}/api/department-expert/apply/`,
+      {
+        method: "POST",
+        body: form,
+      }
+    );
+
+    if (res.ok) {
+      alert("Application submitted successfully");
+    } else {
+      alert("Something went wrong");
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background text-background px-4">
-      <Card className="w-full max-w-3xl bg-background text-foreground border-border shadow-xl">
+    <div className="min-h-screen bg-background flex items-center justify-center px-4 py-10">
+      <Card className="w-full max-w-3xl bg-background text-foreground border border-border shadow-xl">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">
             Department Expert – HostelsKit
@@ -67,24 +101,61 @@ export default function Page() {
 
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
+
             {/* Basic Info */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input className="bg-background text-foreground" placeholder="Name" required onChange={(e) => handleChange("name", e.target.value)} />
-              <Input className="bg-background text-foreground" placeholder="Course" required onChange={(e) => handleChange("course", e.target.value)} />
-              <Input className="bg-background text-foreground" placeholder="Academic Year" required onChange={(e) => handleChange("academicYear", e.target.value)} />
-              <Input className="bg-background text-foreground" placeholder="Mobile Number" required onChange={(e) => handleChange("mobile", e.target.value)} />
-              <Input className="bg-background text-foreground" placeholder="University Name" required onChange={(e) => handleChange("university", e.target.value)} />
-              <Input className="bg-background text-foreground" placeholder="City" required onChange={(e) => handleChange("city", e.target.value)} />
+              <Input
+                className="bg-background text-foreground"
+                placeholder="Name"
+                required
+                onChange={(e) => handleChange("name", e.target.value)}
+              />
+              <Input
+                className="bg-background text-foreground"
+                placeholder="Mobile Number"
+                required
+                onChange={(e) => handleChange("mobile", e.target.value)}
+              />
+            </div>
+
+            {/* University */}
+            <div className="space-y-2">
+              <Label>University</Label>
+              <Select onValueChange={(v) => handleChange("university", v)} required>
+                <SelectTrigger className="w-full bg-background">
+                  <SelectValue placeholder="Select university" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(UNIVERSITY_OPTIONS).map(([k, v]) => (
+                    <SelectItem key={k} value={k}>{v}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Course */}
+            <div className="space-y-2">
+              <Label>Course</Label>
+              <Select onValueChange={(v) => handleChange("course", v)} required>
+                <SelectTrigger className="w-full bg-background">
+                  <SelectValue placeholder="Select course" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(COURSE_OPTIONS).map(([k, v]) => (
+                    <SelectItem key={k} value={k}>{v}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Gender */}
             <div className="space-y-2">
-              <Label className="text-foreground">Gender</Label>
-              <Select onValueChange={(value) => handleChange("gender", value)} required>
-                <SelectTrigger className="bg-background text-foreground">
+              <Label>Gender</Label>
+              <Select onValueChange={(v) => handleChange("gender", v)} required>
+                <SelectTrigger className="w-full bg-background">
                   <SelectValue placeholder="Select gender" />
                 </SelectTrigger>
-                <SelectContent className="bg-background text-foreground">
+                <SelectContent>
                   <SelectItem value="Male">Male</SelectItem>
                   <SelectItem value="Female">Female</SelectItem>
                   <SelectItem value="Prefer not to say">Prefer not to say</SelectItem>
@@ -93,51 +164,84 @@ export default function Page() {
             </div>
 
             {/* Text Areas */}
-            <Textarea className="bg-background text-foreground" placeholder="Why do you want to become a Department Expert?" required onChange={(e) => handleChange("reason", e.target.value)} />
-            <Textarea className="bg-background text-foreground" placeholder="What practical knowledge can you share?" required onChange={(e) => handleChange("practicalKnowledge", e.target.value)} />
-            <Textarea className="bg-background text-foreground" placeholder="Common mistakes new students make" required onChange={(e) => handleChange("mistakes", e.target.value)} />
+            <Textarea
+              className="bg-background text-foreground"
+              placeholder="Why do you want to become a Department Expert?"
+              onChange={(e) => handleChange("reason", e.target.value)}
+            />
+            <Textarea
+              className="bg-background text-foreground"
+              placeholder="What practical knowledge can you share?"
+              onChange={(e) => handleChange("practical_knowledge", e.target.value)}
+            />
+            <Textarea
+              className="bg-background text-foreground"
+              placeholder="Common mistakes new students make"
+              onChange={(e) => handleChange("mistakes", e.target.value)}
+            />
 
-            {/* Agreements */}
-            <div className="grid gap-4">
-              {[
-                { label: "Do you agree to provide honest guidance?", name: "agreeGuidance" },
-                { label: "Maintain respectful communication?", name: "agreeRespect" },
-                { label: "Allow HostelsKit to review interactions?", name: "agreeReview" },
-              ].map((item) => (
-                <div key={item.name} className="space-y-2">
-                  <Label className="text-foreground">{item.label}</Label>
-                  <Select onValueChange={(value) => handleChange(item.name, value)} required>
-                    <SelectTrigger className="bg-background text-foreground">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-background text-foreground">
-                      <SelectItem value="Yes">Yes</SelectItem>
-                      <SelectItem value="No">No</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              ))}
+            {/* Yes / No */}
+            {[
+              ["Are you in last year?", "is_last_year"],
+              ["Agree to provide honest guidance?", "agree_guidance"],
+              ["Maintain respectful communication?", "agree_respect"],
+              ["Allow HostelsKit to review interactions?", "agree_review"],
+            ].map(([label, key]) => (
+              <div key={key} className="space-y-2">
+                <Label>{label}</Label>
+                <Select onValueChange={(v) => handleChange(key, v)} required>
+                  <SelectTrigger className="w-full bg-background">
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Yes">Yes</SelectItem>
+                    <SelectItem value="No">No</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            ))}
+
+            {/* Uploads */}
+            <div className="space-y-2">
+              <Label>Upload verification document</Label>
+              <Input
+                type="file"
+                accept="image/*,.pdf"
+                required
+                onChange={(e) =>
+                  handleChange("verification_document", e.target.files?.[0] || null)
+                }
+              />
             </div>
 
-            {/* File Upload */}
             <div className="space-y-2">
-              <Label className="text-foreground">Upload verification document</Label>
-              <Input type="file" className="bg-background text-foreground" accept="image/*,.pdf" required />
+              <Label>
+                Upload your picture in front of your department
+              </Label>
+              <Input
+                type="file"
+                accept="image/*"
+                required
+                onChange={(e) =>
+                  handleChange("department_photo", e.target.files?.[0] || null)
+                }
+              />
             </div>
 
             {/* Confirmation */}
-            <div className="flex items-center space-x-2">
-              <Checkbox />
-              <Label className="text-foreground">
-                I confirm that the information provided is accurate
-              </Label>
+            <div className="flex items-center gap-2">
+              <Checkbox
+                checked={formData.confirmation}
+                onCheckedChange={(v) => handleChange("confirmation", !!v)}
+              />
+              <Label>I confirm that the information is accurate</Label>
             </div>
 
             <p className="text-sm text-foreground/70">
               This form is an expression of interest. Submission does not guarantee selection.
             </p>
 
-            <Button type="submit" className="w-full hover:bg-gray-300 text-black bg-white ">
+            <Button type="submit" className="w-full">
               Submit Application
             </Button>
           </form>
