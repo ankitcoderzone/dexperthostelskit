@@ -166,26 +166,26 @@ export default function Page() {
             {/* Text Areas */}
             <Textarea
               className="bg-background text-foreground"
-              placeholder="Why do you want to become a Department Expert?"
+              placeholder="Why do you want to become a Department Expert at Hostel Kit?"
               onChange={(e) => handleChange("reason", e.target.value)}
             />
             <Textarea
               className="bg-background text-foreground"
-              placeholder="What practical knowledge can you share?"
+              placeholder="What practical knowledge can you share with new students of your department?"
               onChange={(e) => handleChange("practical_knowledge", e.target.value)}
             />
             <Textarea
               className="bg-background text-foreground"
-              placeholder="Common mistakes new students make"
+              placeholder="What are the most common mistakes new students make in your department?"
               onChange={(e) => handleChange("mistakes", e.target.value)}
             />
 
             {/* Yes / No */}
             {[
               ["Are you in last year?", "is_last_year"],
-              ["Agree to provide honest guidance?", "agree_guidance"],
-              ["Maintain respectful communication?", "agree_respect"],
-              ["Allow HostelsKit to review interactions?", "agree_review"],
+              ["Do you agree to provide honest guidance and avoid misinformation?", "agree_guidance"],
+              ["Do you agree to maintain respectful and professional communication with students or parents?", "agree_respect"],
+              ["Do you agree that Hostel Kit may review and moniter interactions for quality and safety?", "agree_review"],
             ].map(([label, key]) => (
               <div key={key} className="space-y-2">
                 <Label>{label}</Label>
@@ -203,7 +203,7 @@ export default function Page() {
 
             {/* Uploads */}
             <div className="space-y-2">
-              <Label>Upload verification document</Label>
+              <Label>Upload verification document(university ID card or any verified proof)</Label>
               <Input
                 type="file"
                 accept="image/*,.pdf"
