@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useState } from "react";
@@ -23,6 +21,11 @@ export default function DiscoverDepartmentExpert() {
     const [experts, setExperts] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [showResults, setShowResults] = useState(false);
+
+    // ✅ ERROR STATES (ONLY ADDITIONS)
+    const [universityError, setUniversityError] = useState(false);
+    const [courseError, setCourseError] = useState(false);
+    const [subjectError, setSubjectError] = useState(false);
 
     /* ---------------- OPTIONS ---------------- */
 
@@ -92,7 +95,6 @@ export default function DiscoverDepartmentExpert() {
 
     /* ---------------- HELPERS ---------------- */
 
-    // ✅ ONLY ADDITION
     const hasSubjects =
         formData.course &&
         SUBJECT_OPTIONS[formData.course] &&
@@ -113,8 +115,24 @@ export default function DiscoverDepartmentExpert() {
     /* ---------------- SEARCH ---------------- */
 
     const handleSearch = async () => {
-        if (!formData.university || !formData.course) return;
-        if (hasSubjects && !formData.subject) return; // ✅ ONLY CHANGE
+        let hasError = false;
+
+        if (!formData.university) {
+            setUniversityError(true);
+            hasError = true;
+        }
+
+        if (!formData.course) {
+            setCourseError(true);
+            hasError = true;
+        }
+
+        if (hasSubjects && !formData.subject) {
+            setSubjectError(true);
+            hasError = true;
+        }
+
+        if (hasError) return;
 
         setLoading(true);
         setShowResults(false);
@@ -126,16 +144,12 @@ export default function DiscoverDepartmentExpert() {
             });
 
             if (hasSubjects) {
-                params.append("subject", formData.subject); // ✅ ONLY CHANGE
+                params.append("subject", formData.subject);
             }
 
             const res = await fetch(
                 `${API_BASE_URL}/api/approved-experts/?${params.toString()}`
             );
-
-            if (!res.ok) {
-                throw new Error(`API error: ${res.status}`);
-            }
 
             const data = await res.json();
             setExperts(Array.isArray(data.results) ? data.results : []);
@@ -155,7 +169,6 @@ export default function DiscoverDepartmentExpert() {
         <div className="min-h-screen bg-background px-4 py-12 text-foreground">
             <div className="mx-auto max-w-5xl">
 
-                {/* HEADER */}
                 <h1 className="mb-2 text-center text-3xl font-semibold">
                     Discover Department Expert
                 </h1>
@@ -163,14 +176,27 @@ export default function DiscoverDepartmentExpert() {
                     Find experts by university, course, and subject
                 </p>
 
-                {/* SEARCH FORM */}
                 <div className="mx-auto mb-12 grid max-w-3xl grid-cols-1 gap-4 rounded-xl border border-border bg-background p-6 shadow-lg sm:grid-cols-4">
 
                     {/* University */}
                     <div className="space-y-2">
-                        <Label>University</Label>
-                        <Select onValueChange={(v) => handleChange("university", v)}>
-                            <SelectTrigger className="w-full">
+                        <Label>
+                            University
+                            {universityError && (
+                                <span className="ml-2 text-xs text-red-500">
+                                    Select university
+                                </span>
+                            )}
+                        </Label>
+                        <Select
+                            onValueChange={(v) => {
+                                handleChange("university", v);
+                                setUniversityError(false);
+                            }}
+                        >
+                            <SelectTrigger
+                                className={`w-full ${universityError ? "border-red-500" : ""}`}
+                            >
                                 <SelectValue placeholder="Select university" />
                             </SelectTrigger>
                             <SelectContent>
@@ -183,14 +209,25 @@ export default function DiscoverDepartmentExpert() {
 
                     {/* Course */}
                     <div className="space-y-2">
-                        <Label>Course</Label>
+                        <Label>
+                            Course
+                            {courseError && (
+                                <span className="ml-2 text-xs text-red-500">
+                                    Select course
+                                </span>
+                            )}
+                        </Label>
                         <Select
                             onValueChange={(v) => {
                                 handleChange("course", v);
                                 handleChange("subject", "");
+                                setCourseError(false);
+                                setSubjectError(false);
                             }}
                         >
-                            <SelectTrigger className="w-full">
+                            <SelectTrigger
+                                className={`w-full ${courseError ? "border-red-500" : ""}`}
+                            >
                                 <SelectValue placeholder="Select course" />
                             </SelectTrigger>
                             <SelectContent>
@@ -201,12 +238,26 @@ export default function DiscoverDepartmentExpert() {
                         </Select>
                     </div>
 
-                    {/* Subject (ONLY IF COURSE HAS SUBJECTS) */}
+                    {/* Subject */}
                     {hasSubjects && (
                         <div className="space-y-2">
-                            <Label>Subject</Label>
-                            <Select onValueChange={(v) => handleChange("subject", v)}>
-                                <SelectTrigger className="w-full">
+                            <Label>
+                                Subject
+                                {subjectError && (
+                                    <span className="ml-2 text-xs text-red-500">
+                                        Select subject
+                                    </span>
+                                )}
+                            </Label>
+                            <Select
+                                onValueChange={(v) => {
+                                    handleChange("subject", v);
+                                    setSubjectError(false);
+                                }}
+                            >
+                                <SelectTrigger
+                                    className={`w-full ${subjectError ? "border-red-500" : ""}`}
+                                >
                                     <SelectValue placeholder="Select subject" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -230,7 +281,6 @@ export default function DiscoverDepartmentExpert() {
                     </button>
                 </div>
 
-                {/* RESULTS */}
                 {loading && <p className="text-center">Loading...</p>}
 
                 {showResults && !loading && experts.length === 0 && (
