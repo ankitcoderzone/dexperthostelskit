@@ -437,7 +437,7 @@ export default function Page() {
       <Card className="w-full max-w-3xl bg-background text-foreground border border-border shadow-xl">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">
-            Department Expert – HostelsKit
+            Department Expert – Hostel Kit
           </CardTitle>
           <CardDescription className="text-foreground/70">
             Apply to guide juniors with honest and practical advice
