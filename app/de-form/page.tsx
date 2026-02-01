@@ -315,11 +315,10 @@ export default function Page() {
     BCA: "Bachelor of Computer Application",
     MCA: "Master of Computer Application",
     BFA: "Bachelor of Fine Arts",
-    MADS: "Defence and Strategic Studies",
-    MscMaths: "Masters in Science",
-    MA: "Master in Arts",
-    Law: "LL.B / LL.M / BA LLB",
+    MSC: "Master of Science",
+    LAW: "LL.B / LL.M / BA LLB",
   };
+
 
   const SUBJECT_OPTIONS: Record<string, string[]> = {
     BSC: [
@@ -345,15 +344,18 @@ export default function Page() {
       "DBMS",
     ],
     MCA: [
-      "Advanced Java",
+      "Computer Science",
+      "Data Structures",
+      "Operating Systems",
+      "DBMS",
       "Web Technologies",
       "Machine Learning",
     ],
-    MscMaths: [
+    MSC: [
       "Pure Mathematics",
       "Applied Mathematics",
     ],
-    Law: [
+    LAW: [
       "Constitutional Law",
       "Criminal Law",
       "Corporate Law",
@@ -530,10 +532,10 @@ export default function Page() {
 
             {/* Yes / No */}
             {[
-               ["Are you in last year?", "is_last_year"],
-               ["Do you agree to provide honest guidance and avoid misinformation?", "agree_guidance"],
-               ["Do you agree to maintain respectful and professional communication with students or parents?", "agree_respect"],
-               ["Do you agree that Hostel Kit may review and moniter interactions for quality and safety?", "agree_review"],
+              ["Are you in last year?", "is_last_year"],
+              ["Do you agree to provide honest guidance and avoid misinformation?", "agree_guidance"],
+              ["Do you agree to maintain respectful and professional communication with students or parents?", "agree_respect"],
+              ["Do you agree that Hostel Kit may review and moniter interactions for quality and safety?", "agree_review"],
             ].map(([label, key]) => (
               <div key={key} className="space-y-2">
                 <Label>{label}</Label>

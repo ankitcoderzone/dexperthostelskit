@@ -374,263 +374,265 @@
 import { useState } from "react";
 import Image from "next/image";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 
 export default function DiscoverDepartmentExpert() {
-  const [formData, setFormData] = useState({
-    university: "",
-    course: "",
-    subject: "", // ✅ NEW
-  });
+    const [formData, setFormData] = useState({
+        university: "",
+        course: "",
+        subject: "", // ✅ NEW
+    });
 
-  const [experts, setExperts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [showResults, setShowResults] = useState(false);
+    const [experts, setExperts] = useState<any[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [showResults, setShowResults] = useState(false);
 
-  /* ---------------- OPTIONS ---------------- */
+    /* ---------------- OPTIONS ---------------- */
 
-  const UNIVERSITY_OPTIONS = {
-    UOA: "University of Allahabad",
-  };
+    const UNIVERSITY_OPTIONS = {
+        UOA: "University of Allahabad",
+    };
 
-  const COURSE_OPTIONS = {
-    BSC: "Bachelor of Science",
-    BA: "Bachelor of Arts",
-    BCA: "Bachelor of Computer Application",
-    MCA: "Master of Computer Application",
-    BFA: "Bachelor of Fine Arts",
-    MADS: "Defence and Strategic Studies",
-    MscMaths: "Masters in Science",
-    MA: "Master in Arts",
-    Law: "LL.B / LL.M / BA LLB",
-  };
+    const COURSE_OPTIONS = {
+        BSC: "Bachelor of Science",
+        BA: "Bachelor of Arts",
+        BCA: "Bachelor of Computer Application",
+        MCA: "Master of Computer Application",
+        BFA: "Bachelor of Fine Arts",
+        MSC: "Master of Science",
+        LAW: "LL.B / LL.M / BA LLB",
+    };
 
-  const SUBJECT_OPTIONS: Record<string, string[]> = {
-    BSC: [
-      "Mathematics",
-      "Physics",
-      "Chemistry",
-      "Zoology",
-      "Botany",
-      "Statistics",
-    ],
-    BA: [
-      "History",
-      "Political Science",
-      "Economics",
-      "Sociology",
-      "Hindi",
-      "English",
-    ],
-    BCA: [
-      "Computer Science",
-      "Data Structures",
-      "Operating Systems",
-      "DBMS",
-    ],
-    MCA: [
-      "Advanced Java",
-      "Web Technologies",
-      "Machine Learning",
-    ],
-    MscMaths: [
-      "Pure Mathematics",
-      "Applied Mathematics",
-    ],
-    Law: [
-      "Constitutional Law",
-      "Criminal Law",
-      "Corporate Law",
-    ],
-  };
 
-  /* ---------------- HELPERS ---------------- */
+    const SUBJECT_OPTIONS: Record<string, string[]> = {
+        BSC: [
+            "Mathematics",
+            "Physics",
+            "Chemistry",
+            "Zoology",
+            "Botany",
+            "Statistics",
+        ],
+        BA: [
+            "History",
+            "Political Science",
+            "Economics",
+            "Sociology",
+            "Hindi",
+            "English",
+        ],
+        BCA: [
+            "Computer Science",
+            "Data Structures",
+            "Operating Systems",
+            "DBMS",
+        ],
+        MCA: [
+            "Computer Science",
+            "Data Structures",
+            "Operating Systems",
+            "DBMS",
+            "Web Technologies",
+            "Machine Learning",
+        ],
+        MSC: [
+            "Pure Mathematics",
+            "Applied Mathematics",
+        ],
+        LAW: [
+            "Constitutional Law",
+            "Criminal Law",
+            "Corporate Law",
+        ],
+    };
 
-  const handleChange = (name: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+    /* ---------------- HELPERS ---------------- */
 
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const handleChange = (name: string, value: string) => {
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
 
-  const getImageUrl = (path?: string) => {
-    if (!path) return "/placeholder-avatar.png";
-    if (path.startsWith("http")) return path;
-    return `${API_BASE_URL}${path}`;
-  };
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-  /* ---------------- SEARCH ---------------- */
+    const getImageUrl = (path?: string) => {
+        if (!path) return "/placeholder-avatar.png";
+        if (path.startsWith("http")) return path;
+        return `${API_BASE_URL}${path}`;
+    };
 
-  const handleSearch = async () => {
-    if (!formData.university || !formData.course || !formData.subject) return;
+    /* ---------------- SEARCH ---------------- */
 
-    setLoading(true);
-    setShowResults(false);
+    const handleSearch = async () => {
+        if (!formData.university || !formData.course || !formData.subject) return;
 
-    try {
-      const params = new URLSearchParams({
-        university: formData.university,
-        course: formData.course,
-        subject: formData.subject, // ✅ NEW
-      });
+        setLoading(true);
+        setShowResults(false);
 
-      const res = await fetch(
-        `${API_BASE_URL}/api/approved-experts/?${params.toString()}`
-      );
+        try {
+            const params = new URLSearchParams({
+                university: formData.university,
+                course: formData.course,
+                subject: formData.subject, // ✅ NEW
+            });
 
-      if (!res.ok) {
-        throw new Error(`API error: ${res.status}`);
-      }
+            const res = await fetch(
+                `${API_BASE_URL}/api/approved-experts/?${params.toString()}`
+            );
 
-      const data = await res.json();
-      setExperts(Array.isArray(data.results) ? data.results : []);
-      setShowResults(true);
-    } catch (error) {
-      console.error(error);
-      setExperts([]);
-      setShowResults(true);
-    } finally {
-      setLoading(false);
-    }
-  };
+            if (!res.ok) {
+                throw new Error(`API error: ${res.status}`);
+            }
 
-  /* ---------------- UI ---------------- */
+            const data = await res.json();
+            setExperts(Array.isArray(data.results) ? data.results : []);
+            setShowResults(true);
+        } catch (error) {
+            console.error(error);
+            setExperts([]);
+            setShowResults(true);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  return (
-    <div className="min-h-screen bg-background px-4 py-12 text-foreground">
-      <div className="mx-auto max-w-5xl">
+    /* ---------------- UI ---------------- */
 
-        {/* HEADER */}
-        <h1 className="mb-2 text-center text-3xl font-semibold">
-          Discover Department Expert
-        </h1>
-        <p className="mb-10 text-center text-sm text-foreground/70">
-          Find experts by university, course, and subject
-        </p>
+    return (
+        <div className="min-h-screen bg-background px-4 py-12 text-foreground">
+            <div className="mx-auto max-w-5xl">
 
-        {/* SEARCH FORM */}
-        <div className="mx-auto mb-12 grid max-w-3xl grid-cols-1 gap-4 rounded-xl border border-border bg-background p-6 shadow-lg sm:grid-cols-4">
+                {/* HEADER */}
+                <h1 className="mb-2 text-center text-3xl font-semibold">
+                    Discover Department Expert
+                </h1>
+                <p className="mb-10 text-center text-sm text-foreground/70">
+                    Find experts by university, course, and subject
+                </p>
 
-          {/* University */}
-          <div className="space-y-2">
-            <Label>University</Label>
-            <Select
-              onValueChange={(v) => handleChange("university", v)}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select university" />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(UNIVERSITY_OPTIONS).map(([k, v]) => (
-                  <SelectItem key={k} value={k}>
-                    {v}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+                {/* SEARCH FORM */}
+                <div className="mx-auto mb-12 grid max-w-3xl grid-cols-1 gap-4 rounded-xl border border-border bg-background p-6 shadow-lg sm:grid-cols-4">
 
-          {/* Course */}
-          <div className="space-y-2">
-            <Label>Course</Label>
-            <Select
-              onValueChange={(v) => {
-                handleChange("course", v);
-                handleChange("subject", ""); // ✅ reset subject
-              }}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select course" />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(COURSE_OPTIONS).map(([k, v]) => (
-                  <SelectItem key={k} value={k}>
-                    {v}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+                    {/* University */}
+                    <div className="space-y-2">
+                        <Label>University</Label>
+                        <Select
+                            onValueChange={(v) => handleChange("university", v)}
+                        >
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Select university" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {Object.entries(UNIVERSITY_OPTIONS).map(([k, v]) => (
+                                    <SelectItem key={k} value={k}>
+                                        {v}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
 
-          {/* Subject (Dependent) */}
-          {formData.course && (
-            <div className="space-y-2">
-              <Label>Subject</Label>
-              <Select
-                onValueChange={(v) => handleChange("subject", v)}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select subject" />
-                </SelectTrigger>
-                <SelectContent>
-                  {SUBJECT_OPTIONS[formData.course]?.map((subject) => (
-                    <SelectItem key={subject} value={subject}>
-                      {subject}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          )}
+                    {/* Course */}
+                    <div className="space-y-2">
+                        <Label>Course</Label>
+                        <Select
+                            onValueChange={(v) => {
+                                handleChange("course", v);
+                                handleChange("subject", ""); // ✅ reset subject
+                            }}
+                        >
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Select course" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {Object.entries(COURSE_OPTIONS).map(([k, v]) => (
+                                    <SelectItem key={k} value={k}>
+                                        {v}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
 
-          {/* Search Button */}
-          <button
-            onClick={handleSearch}
-            disabled={loading}
-            className="rounded-lg bg-foreground px-6 py-2 text-sm font-medium text-background disabled:opacity-50"
-          >
-            {loading ? "Searching..." : "Search"}
-          </button>
-        </div>
+                    {/* Subject (Dependent) */}
+                    {formData.course && (
+                        <div className="space-y-2">
+                            <Label>Subject</Label>
+                            <Select
+                                onValueChange={(v) => handleChange("subject", v)}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Select subject" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {SUBJECT_OPTIONS[formData.course]?.map((subject) => (
+                                        <SelectItem key={subject} value={subject}>
+                                            {subject}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    )}
 
-        {/* RESULTS */}
-        {loading && <p className="text-center">Loading...</p>}
-
-        {showResults && !loading && experts.length === 0 && (
-          <p className="text-center text-foreground/60">
-            No experts found for this selection.
-          </p>
-        )}
-
-        {showResults && experts.length > 0 && (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {experts.map((expert) => (
-              <div
-                key={expert.id}
-                className="flex flex-col items-center rounded-xl border border-border bg-background p-6 shadow-md"
-              >
-                <div className="relative mb-4 h-28 w-28 overflow-hidden rounded-full">
-                  <Image
-                    src={getImageUrl(expert.department_photo)}
-                    alt={expert.name}
-                    fill
-                    sizes="112px"
-                    className="object-cover"
-                  />
+                    {/* Search Button */}
+                    <button
+                        onClick={handleSearch}
+                        disabled={loading}
+                        className="rounded-lg bg-foreground px-6 py-2 text-sm font-medium text-background disabled:opacity-50"
+                    >
+                        {loading ? "Searching..." : "Search"}
+                    </button>
                 </div>
 
-                <h3 className="text-lg font-semibold">{expert.name}</h3>
-                <p className="mb-1 text-sm text-foreground/70">
-                  {expert.course_name}
-                </p>
-                <p className="mb-4 text-xs text-foreground/60">
-                  {expert.subject}
-                </p>
+                {/* RESULTS */}
+                {loading && <p className="text-center">Loading...</p>}
 
-                <button className="rounded-lg border border-border px-5 py-2 text-sm transition hover:bg-foreground hover:text-background">
-                  Contact Now
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
+                {showResults && !loading && experts.length === 0 && (
+                    <p className="text-center text-foreground/60">
+                        No experts found for this selection.
+                    </p>
+                )}
+
+                {showResults && experts.length > 0 && (
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        {experts.map((expert) => (
+                            <div
+                                key={expert.id}
+                                className="flex flex-col items-center rounded-xl border border-border bg-background p-6 shadow-md"
+                            >
+                                <div className="relative mb-4 h-28 w-28 overflow-hidden rounded-full">
+                                    <Image
+                                        src={getImageUrl(expert.department_photo)}
+                                        alt={expert.name}
+                                        fill
+                                        sizes="112px"
+                                        className="object-cover"
+                                    />
+                                </div>
+
+                                <h3 className="text-lg font-semibold">{expert.name}</h3>
+                                <p className="mb-1 text-sm text-foreground/70">
+                                    {expert.course_name}
+                                </p>
+                                <p className="mb-4 text-xs text-foreground/60">
+                                    {expert.subject}
+                                </p>
+
+                                <button className="rounded-lg border border-border px-5 py-2 text-sm transition hover:bg-foreground hover:text-background">
+                                    Contact Now
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
 }
 
