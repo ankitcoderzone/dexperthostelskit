@@ -42,14 +42,22 @@ export default function Page() {
 
   const UNIVERSITY_OPTIONS = {
     UOA: "University of Allahabad",
-    LU: "Lucknow University",
+    // LU: "Lucknow University",
   };
 
   const COURSE_OPTIONS = {
     BSC: "Bachelor of Science",
     BA: "Bachelor of Arts",
     BCA: "Bachelor of Computer Application",
+    MCA: "Master of Computer Application",
     BFA: "Bachelor of Fine Arts",
+    MADS: "Defence and Strategic Studies",
+    MscMaths: "Masters in Science",
+    MA: "Master in Arts",
+    Law: "LL.B/LL.M/BA LLB",
+
+
+
   };
 
   const handleChange = (
