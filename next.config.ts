@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
-      // local dev
+      // local dev (Django media)
       {
         protocol: "http",
         hostname: "127.0.0.1",
@@ -17,15 +17,23 @@ const nextConfig: NextConfig = {
         pathname: "/media/**",
       },
 
-      // production
+      // production Django media (optional, legacy)
       {
         protocol: "https",
         hostname: "dexpertbackend.onrender.com",
         pathname: "/media/**",
+      },
+
+      // ✅ Cloudinary (REQUIRED)
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
       },
     ],
   },
 };
 
 export default nextConfig;
+
 

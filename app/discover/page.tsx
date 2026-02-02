@@ -108,9 +108,9 @@ export default function DiscoverDepartmentExpert() {
 
     const getImageUrl = (path?: string) => {
         if (!path) return "/placeholder-avatar.png";
-        if (path.startsWith("http")) return path;
-        return `${API_BASE_URL}${path}`;
+        return path; // Cloudinary already returns full URL
     };
+
 
     /* ---------------- SEARCH ---------------- */
 
