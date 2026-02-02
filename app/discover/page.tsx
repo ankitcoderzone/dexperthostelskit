@@ -106,10 +106,10 @@ export default function DiscoverDepartmentExpert() {
 
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-    const getImageUrl = (path?: string) => {
-        if (!path) return "/placeholder-avatar.png";
-        return path; // Cloudinary already returns full URL
-    };
+    // const getImageUrl = (path?: string) => {
+    //     if (!path) return "/placeholder-avatar.png";
+    //     return path; // Cloudinary already returns full URL
+    // };
 
 
     /* ---------------- SEARCH ---------------- */
@@ -298,7 +298,7 @@ export default function DiscoverDepartmentExpert() {
                             >
                                 <div className="relative mb-4 h-28 w-28 overflow-hidden rounded-full">
                                     <Image
-                                        src={getImageUrl(expert.department_photo)}
+                                        src={expert.department_photo}
                                         alt={expert.name}
                                         fill
                                         sizes="112px"
