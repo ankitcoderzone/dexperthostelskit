@@ -303,7 +303,9 @@ export default function DiscoverDepartmentExpert() {
                                         fill
                                         sizes="112px"
                                         className="object-cover"
+                                        unoptimized
                                     />
+
                                 </div>
 
                                 <h3 className="text-lg font-semibold">{expert.name}</h3>
