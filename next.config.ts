@@ -25,11 +25,7 @@ const nextConfig: NextConfig = {
       },
 
       // ✅ Cloudinary (REQUIRED)
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-        pathname: "/**",
-      },
+     
     ],
   },
 };
