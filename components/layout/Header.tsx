@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 
 export default function Header() {
@@ -31,7 +31,7 @@ export default function Header() {
 
         {/* DESKTOP NAV */}
         <nav className="hidden md:flex items-center gap-4">
-          <Button variant="ghost" asChild>
+          <Button  variant="ghost" asChild>
             <Link href="https://hostelskit.com">About</Link>
           </Button>
           <Button variant="outline" asChild>
@@ -48,17 +48,18 @@ export default function Header() {
               </Button>
             </SheetTrigger>
 
-            <SheetContent side="right" className="w-64">
-              <nav className="flex flex-col gap-4 mt-6">
+            <SheetContent side="top" className="w-full">
+              <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+              <nav className="flex flex-col items-center justify-center gap-6 py-8">
                 <Link
                   href="https://hostelskit.com"
-                  className="text-sm font-medium hover:underline"
+                  className="text-lg font-medium hover:text-primary transition-colors"
                 >
                   About
                 </Link>
                 <Link
                   href="https://hostelskit.com"
-                  className="text-sm font-medium hover:underline"
+                  className="text-lg font-medium hover:text-primary transition-colors"
                 >
                   Contacts
                 </Link>
