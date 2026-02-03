@@ -11,9 +11,9 @@ function ButtonNavigationClient() {
 
     return (
         <>
-        <div className='flex gap-6' >
-            <Button onClick={()=>router.push("./de-form")}  > Apply </Button>
-            <Button onClick={()=>router.push("./discover")} variant={"secondary"} > Discover </Button>
+        <div className='flex flex-col sm:flex-row gap-4 sm:gap-6 w-full sm:w-auto' >
+            <Button className='cursor-pointer w-full sm:w-auto' onClick={()=>router.push("./de-form")}  > Apply </Button>
+            <Button className='cursor-pointer w-full sm:w-auto' onClick={()=>router.push("./discover")} variant={"secondary"} > Discover </Button>
         </div>
         </>
     )

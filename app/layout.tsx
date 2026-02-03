@@ -6,6 +6,7 @@ import ButtonClient from "@/components/home/ButtonClient";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import Header from "@/components/layout/Header";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
         {children}
         <Analytics />
         <Footer />
+        <Toaster position="top-center" richColors />
       </body>
     </html>
   );

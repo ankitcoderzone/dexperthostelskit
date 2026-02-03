@@ -10,6 +10,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 export default function DiscoverDepartmentExpert() {
     const [formData, setFormData] = useState({
@@ -119,16 +120,19 @@ export default function DiscoverDepartmentExpert() {
 
         if (!formData.university) {
             setUniversityError(true);
+            toast.error("Please select a university");
             hasError = true;
         }
 
         if (!formData.course) {
             setCourseError(true);
+            toast.error("Please select a course");
             hasError = true;
         }
 
         if (hasSubjects && !formData.subject) {
             setSubjectError(true);
+            toast.error("Please select a subject");
             hasError = true;
         }
 
@@ -156,6 +160,7 @@ export default function DiscoverDepartmentExpert() {
             setShowResults(true);
         } catch (error) {
             console.error(error);
+            toast.error("Failed to fetch experts. Please try again later.");
             setExperts([]);
             setShowResults(true);
         } finally {

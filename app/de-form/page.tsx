@@ -1,363 +1,3 @@
-
-
-
-// "use client";
-
-// import { useState } from "react";
-// import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
-// import { Textarea } from "@/components/ui/textarea";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
-// import { Checkbox } from "@/components/ui/checkbox";
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardHeader,
-//   CardTitle,
-// } from "@/components/ui/card";
-// import { Label } from "@/components/ui/label";
-
-// export default function Page() {
-//   const [submitting, setSubmitting] = useState(false);
-
-//   const [formData, setFormData] = useState({
-//     name: "",
-//     mobile: "",
-//     university: "",
-//     course: "",
-//     subject: "",
-//     gender: "",
-//     is_last_year: "",
-//     reason: "",
-//     practical_knowledge: "",
-//     mistakes: "",
-//     agree_guidance: "",
-//     agree_respect: "",
-//     agree_review: "",
-//     confirmation: false,
-//     verification_document: null as File | null,
-//     department_photo: null as File | null,
-//   });
-
-//   /* ---------------- OPTIONS ---------------- */
-
-//   const UNIVERSITY_OPTIONS = {
-//     UOA: "University of Allahabad",
-//   };
-
-//   const COURSE_OPTIONS = {
-//     BSC: "Bachelor of Science",
-//     BA: "Bachelor of Arts",
-//     BCA: "Bachelor of Computer Application",
-//     BFA: "Bachelor of Fine Arts",
-//     MCA: "Master of Computer Application",
-//     MCABCA: "Five Year Integrated BCA & MCA (Data Science)",
-//     MSC: "Master of Science",
-//     LAW: "Law",
-//     BCOM: "Bachelor of Commerce",
-//     BTECH: "B.TECH",
-//   };
-
-//   const SUBJECT_OPTIONS: Record<string, string[]> = {
-//     BSC: ["Mathematics", "Physics", "Chemistry", "Zoology", "Botany", "Statistics"],
-//     BA: ["History", "Political Science", "Economics", "Sociology", "Hindi", "English"],
-//     BTECH: ["Computer Sc. and Engineering", "Electronics and Comm. Engineering"],
-//     MSC: [
-//       "Mathematics",
-//       "Physics",
-//       "Statistics",
-//       "Zoology",
-//       "Cognitive Science",
-//       "Materials Science",
-//       "Food Technology",
-//       "Bioinformatics",
-//       "Biotechnology",
-//       "Environmental Science",
-//       "Design and Innovation in Rural Technology",
-//       "Agricultural Zoology & Entomology",
-//       "Anthropology",
-//       "Geography",
-//       "Psychology",
-//       "Bio-Chemistry",
-//       "Botany",
-//       "Agricultural Botany",
-//       "Chemistry",
-//       "Agricultural Chemistry & Soil Science",
-//       "Defence Studies",
-//       "Applied Geology",
-//       "Computer Science",
-//       "Textile & Apparel Designing",
-//       "Food and Nutrition",
-//     ],
-//     MA: [
-//       "Philosophy",
-//       "Hindi",
-//       "Mass Communication",
-//       "Political Sc.",
-//       "Psychology",
-//       "Med. & Mod. History",
-//       "Anthropology",
-//       "(Music- Sitar/ Tabla/Voca",
-//       "Education",
-//       "English Litt.",
-//       "Geography",
-//     ],
-//     LAW: ["LLB", "BALLB", "LL.M.", "Ph.D. Law"],
-//   };
-
-//   /* ---------------- HANDLERS ---------------- */
-
-//   // ✅ ONLY ADDITION
-//   const hasSubjects =
-//     formData.course &&
-//     SUBJECT_OPTIONS[formData.course] &&
-//     SUBJECT_OPTIONS[formData.course].length > 0;
-
-//   const handleChange = (
-//     name: string,
-//     value: string | boolean | File | null
-//   ) => {
-//     setFormData((prev) => ({ ...prev, [name]: value }));
-//   };
-
-//   const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
-
-//     if (submitting) return; // ✅ prevent double submit
-//     setSubmitting(true);
-
-//     const form = new FormData();
-//     Object.entries(formData).forEach(([key, value]) => {
-//       if (value !== null && value !== "") {
-//         form.append(key, value as any);
-//       }
-
-//     });
-
-//     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-//     try {
-//       const res = await fetch(
-//         `${API_BASE_URL}/api/department-expert/apply/`,
-//         {
-//           method: "POST",
-//           body: form,
-//         }
-//       );
-
-//       if (res.ok) {
-//         alert("Application submitted successfully");
-//       } else {
-//         alert("Something went wrong");
-//         setSubmitting(false); // ❌ re-enable on failure
-//       }
-//     } catch (err) {
-//       alert("Network error");
-//       setSubmitting(false); // ❌ re-enable on error
-//     }
-//   };
-
-
-//   /* ---------------- UI ---------------- */
-
-//   return (
-//     <div className="min-h-screen bg-background flex items-center justify-center px-4 py-10">
-//       <Card className="w-full max-w-3xl bg-background text-foreground border border-border shadow-xl">
-//         <CardHeader className="text-center">
-//           <CardTitle className="text-2xl">
-//             Department Expert – Hostel Kit
-//           </CardTitle>
-//           <CardDescription className="text-foreground/70">
-//             Apply to guide juniors with honest and practical advice
-//           </CardDescription>
-//         </CardHeader>
-
-//         <CardContent>
-//           <form onSubmit={handleSubmit} className="space-y-6">
-
-//             {/* Basic Info */}
-//             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-//               <Input placeholder="Name" required onChange={(e) => handleChange("name", e.target.value)} />
-//               <Input placeholder="Mobile Number" required onChange={(e) => handleChange("mobile", e.target.value)} />
-//             </div>
-
-//             {/* University */}
-//             <div className="space-y-2">
-//               <Label>University</Label>
-//               <Select onValueChange={(v) => handleChange("university", v)} required>
-//                 <SelectTrigger className="w-full">
-//                   <SelectValue placeholder="Select university" />
-//                 </SelectTrigger>
-//                 <SelectContent>
-//                   {Object.entries(UNIVERSITY_OPTIONS).map(([k, v]) => (
-//                     <SelectItem key={k} value={k}>{v}</SelectItem>
-//                   ))}
-//                 </SelectContent>
-//               </Select>
-//             </div>
-
-//             {/* Course */}
-//             <div className="space-y-2">
-//               <Label>Course</Label>
-//               <Select
-//                 onValueChange={(v) => {
-//                   handleChange("course", v);
-//                   handleChange("subject", "");
-//                 }}
-//                 required
-//               >
-//                 <SelectTrigger className="w-full">
-//                   <SelectValue placeholder="Select course" />
-//                 </SelectTrigger>
-//                 <SelectContent>
-//                   {Object.entries(COURSE_OPTIONS).map(([k, v]) => (
-//                     <SelectItem key={k} value={k}>{v}</SelectItem>
-//                   ))}
-//                 </SelectContent>
-//               </Select>
-//             </div>
-
-//             {/* Subject (ONLY if course has subjects) */}
-//             {hasSubjects && (
-//               <div className="space-y-2">
-//                 <Label>Subject</Label>
-//                 <Select onValueChange={(v) => handleChange("subject", v)} required>
-//                   <SelectTrigger className="w-full">
-//                     <SelectValue placeholder="Select subject" />
-//                   </SelectTrigger>
-//                   <SelectContent>
-//                     {SUBJECT_OPTIONS[formData.course].map((subject) => (
-//                       <SelectItem key={subject} value={subject}>{subject}</SelectItem>
-//                     ))}
-//                   </SelectContent>
-//                 </Select>
-//               </div>
-//             )}
-
-//             {/* Gender */}
-//             <div className="space-y-2">
-//               <Label>Gender</Label>
-//               <Select
-//                 onValueChange={(v) => handleChange("gender", v)}
-//                 required
-//               >
-//                 <SelectTrigger className="w-full">
-//                   <SelectValue placeholder="Select gender" />
-//                 </SelectTrigger>
-//                 <SelectContent>
-//                   <SelectItem value="Male">Male</SelectItem>
-//                   <SelectItem value="Female">Female</SelectItem>
-//                   <SelectItem value="Prefer not to say">
-//                     Prefer not to say
-//                   </SelectItem>
-//                 </SelectContent>
-//               </Select>
-//             </div>
-
-//             {/* Text Areas */}
-//             <Textarea
-//               placeholder="Why do you want to become a Department Expert at Hostel Kit?"
-//               onChange={(e) => handleChange("reason", e.target.value)}
-//             />
-//             <Textarea
-//               placeholder="What practical knowledge can you share with new students of your department?"
-//               onChange={(e) =>
-//                 handleChange("practical_knowledge", e.target.value)
-//               }
-//             />
-//             <Textarea
-//               placeholder="What are the most common mistakes new students make in your department?"
-//               onChange={(e) => handleChange("mistakes", e.target.value)}
-//             />
-
-//             {/* Yes / No */}
-//             {[
-//               ["Are you in last year?", "is_last_year"],
-//               ["Do you agree to provide honest guidance and avoid misinformation?", "agree_guidance"],
-//               ["Do you agree to maintain respectful and professional communication with students or parents?", "agree_respect"],
-//               ["Do you agree that Hostel Kit may review and moniter interactions for quality and safety?", "agree_review"],
-//             ].map(([label, key]) => (
-//               <div key={key} className="space-y-2">
-//                 <Label>{label}</Label>
-//                 <Select
-//                   onValueChange={(v) => handleChange(key, v)}
-//                   required
-//                 >
-//                   <SelectTrigger className="w-full">
-//                     <SelectValue placeholder="Select" />
-//                   </SelectTrigger>
-//                   <SelectContent>
-//                     <SelectItem value="Yes">Yes</SelectItem>
-//                     <SelectItem value="No">No</SelectItem>
-//                   </SelectContent>
-//                 </Select>
-//               </div>
-//             ))}
-
-//             {/* Uploads */}
-//             <div className="space-y-2">
-//               <Label>Upload a photo taken at your university (for verification purposes only).</Label>
-//               <Input
-//                 type="file"
-//                 accept="image/*,.pdf"
-//                 required
-//                 onChange={(e) =>
-//                   handleChange(
-//                     "verification_document",
-//                     e.target.files?.[0] || null
-//                   )
-//                 }
-//               />
-//             </div>
-
-//             <div className="space-y-2">
-//               <Label>Your Profile Image</Label>
-//               <Input
-//                 type="file"
-//                 accept="image/*"
-//                 required
-//                 onChange={(e) =>
-//                   handleChange(
-//                     "department_photo",
-//                     e.target.files?.[0] || null
-//                   )
-//                 }
-//               />
-//             </div>
-
-//             {/* Confirmation */}
-//             <div className="flex items-center gap-2">
-//               <Checkbox
-//                 checked={formData.confirmation}
-//                 onCheckedChange={(v) =>
-//                   handleChange("confirmation", !!v)
-//                 }
-//               />
-//               <Label>I confirm that the information is accurate</Label>
-//             </div>
-//             <Button
-//               type="submit"
-//               className="w-full"
-//               disabled={submitting}
-//             >
-//               {submitting ? "Submitting… please wait" : "Submit Application"}
-//             </Button>
-
-
-//           </form>
-//         </CardContent>
-//       </Card>
-//     </div>
-//   );
-// }
-
 "use client";
 
 import { useState } from "react";
@@ -380,8 +20,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { toast } from "sonner";
+
+const TOTAL_STEPS = 5;
 
 export default function Page() {
+  const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -389,7 +34,7 @@ export default function Page() {
     mobile: "",
     university: "",
     course: "",
-    subject: null as string | null, // ✅ FIXED
+    subject: null as string | null,
     gender: "",
     is_last_year: "",
     reason: "",
@@ -427,44 +72,18 @@ export default function Page() {
     BA: ["History", "Political Science", "Economics", "Sociology", "Hindi", "English"],
     BTECH: ["Computer Sc. and Engineering", "Electronics and Comm. Engineering"],
     MSC: [
-      "Mathematics",
-      "Physics",
-      "Statistics",
-      "Zoology",
-      "Cognitive Science",
-      "Materials Science",
-      "Food Technology",
-      "Bioinformatics",
-      "Biotechnology",
-      "Environmental Science",
-      "Design and Innovation in Rural Technology",
-      "Agricultural Zoology & Entomology",
-      "Anthropology",
-      "Geography",
-      "Psychology",
-      "Bio-Chemistry",
-      "Botany",
-      "Agricultural Botany",
-      "Chemistry",
-      "Agricultural Chemistry & Soil Science",
-      "Defence Studies",
-      "Applied Geology",
-      "Computer Science",
-      "Textile & Apparel Designing",
-      "Food and Nutrition",
+      "Mathematics", "Physics", "Statistics", "Zoology", "Cognitive Science",
+      "Materials Science", "Food Technology", "Bioinformatics", "Biotechnology",
+      "Environmental Science", "Design and Innovation in Rural Technology",
+      "Agricultural Zoology & Entomology", "Anthropology", "Geography", "Psychology",
+      "Bio-Chemistry", "Botany", "Agricultural Botany", "Chemistry",
+      "Agricultural Chemistry & Soil Science", "Defence Studies", "Applied Geology",
+      "Computer Science", "Textile & Apparel Designing", "Food and Nutrition",
     ],
     MA: [
-      "Philosophy",
-      "Hindi",
-      "Mass Communication",
-      "Political Sc.",
-      "Psychology",
-      "Med. & Mod. History",
-      "Anthropology",
-      "(Music- Sitar/ Tabla/Voca",
-      "Education",
-      "English Litt.",
-      "Geography",
+      "Philosophy", "Hindi", "Mass Communication", "Political Sc.", "Psychology",
+      "Med. & Mod. History", "Anthropology", "(Music- Sitar/ Tabla/Voca", "Education",
+      "English Litt.", "Geography",
     ],
     LAW: ["LLB", "BALLB", "LL.M.", "Ph.D. Law"],
   };
@@ -483,49 +102,67 @@ export default function Page() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  /* ---------------- VALIDATION (ONLY ADDITION) ---------------- */
+  /* ---------------- STEP VALIDATION ---------------- */
 
-  const validateForm = () => {
-    if (!formData.name.trim()) return alert("Name is required"), false;
+  const validateStep = (currentStep: number): boolean => {
+    switch (currentStep) {
+      case 1:
+        if (!formData.name.trim()) return toast.error("Name is required"), false;
+        if (!/^\d{10}$/.test(formData.mobile))
+          return toast.error("Mobile number must be exactly 10 digits"), false;
+        if (!formData.gender) return toast.error("Select gender"), false;
+        return true;
 
-    if (!/^\d{10}$/.test(formData.mobile))
-      return alert("Mobile number must be exactly 10 digits"), false;
+      case 2:
+        if (!formData.university) return toast.error("Select university"), false;
+        if (!formData.course) return toast.error("Select course"), false;
+        if (hasSubjects && !formData.subject)
+          return toast.error("Select subject"), false;
+        if (!formData.is_last_year) return toast.error("Select last year status"), false;
+        return true;
 
-    if (!formData.university) return alert("Select university"), false;
-    if (!formData.course) return alert("Select course"), false;
+      case 3:
+        // Text areas are optional
+        return true;
 
-    if (hasSubjects && !formData.subject)
-      return alert("Select subject"), false;
+      case 4:
+        if (!formData.agree_guidance)
+          return toast.error("Answer guidance question"), false;
+        if (!formData.agree_respect)
+          return toast.error("Answer respect question"), false;
+        if (!formData.agree_review)
+          return toast.error("Answer review question"), false;
+        return true;
 
-    if (!formData.gender) return alert("Select gender"), false;
-    if (!formData.is_last_year) return alert("Select last year status"), false;
+      case 5:
+        if (!formData.verification_document)
+          return toast.error("Verification document is required"), false;
+        if (!formData.department_photo)
+          return toast.error("Profile image is required"), false;
+        if (!formData.confirmation)
+          return toast.error("You must confirm the information"), false;
+        return true;
 
-    if (!formData.agree_guidance)
-      return alert("Answer guidance question"), false;
-    if (!formData.agree_respect)
-      return alert("Answer respect question"), false;
-    if (!formData.agree_review)
-      return alert("Answer review question"), false;
+      default:
+        return true;
+    }
+  };
 
-    if (!formData.verification_document)
-      return alert("Verification document is required"), false;
+  const nextStep = () => {
+    if (validateStep(step)) {
+      setStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
+    }
+  };
 
-    if (!formData.department_photo)
-      return alert("Profile image is required"), false;
-
-    if (!formData.confirmation)
-      return alert("You must confirm the information"), false;
-
-    return true;
+  const prevStep = () => {
+    setStep((prev) => Math.max(prev - 1, 1));
   };
 
   /* ---------------- SUBMIT ---------------- */
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     if (submitting) return;
-    if (!validateForm()) return;
+    if (!validateStep(5)) return;
 
     setSubmitting(true);
 
@@ -546,46 +183,83 @@ export default function Page() {
       );
 
       if (res.ok) {
-        alert("Application submitted successfully");
+        toast.success("Application submitted successfully");
       } else {
         const err = await res.text();
-        alert(err || "Something went wrong");
+        toast.error(err || "Something went wrong");
         setSubmitting(false);
       }
     } catch {
-      alert("Network error");
+      toast.error("Network error");
       setSubmitting(false);
     }
   };
 
-  /* ---------------- UI ---------------- */
+  /* ---------------- STEP TITLES ---------------- */
 
-  return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4 py-10">
-      <Card className="w-full max-w-3xl bg-background text-foreground border border-border shadow-xl">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl">
-            Department Expert – Hostel Kit
-          </CardTitle>
-          <CardDescription className="text-foreground/70">
-            Apply to guide juniors with honest and practical advice
-          </CardDescription>
-        </CardHeader>
+  const stepTitles = [
+    "Personal Info",
+    "Academic Details",
+    "Experience",
+    "Agreements",
+    "Documents",
+  ];
 
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
+  /* ---------------- STEP CONTENT ---------------- */
 
-            {/* BASIC INFO */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input placeholder="Name" onChange={(e) => handleChange("name", e.target.value)} />
-              <Input placeholder="Mobile Number" onChange={(e) => handleChange("mobile", e.target.value)} />
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return (
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>Name</Label>
+              <Input
+                placeholder="Enter your full name"
+                value={formData.name}
+                onChange={(e) => handleChange("name", e.target.value)}
+              />
             </div>
+            <div className="space-y-2">
+              <Label>Mobile Number</Label>
+              <Input
+                placeholder="10-digit mobile number"
+                value={formData.mobile}
+                type="number"
+                onChange={(e) => handleChange("mobile", e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Gender</Label>
+              <Select
+                value={formData.gender}
+                onValueChange={(v) => handleChange("gender", v)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select gender" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Male">Male</SelectItem>
+                  <SelectItem value="Female">Female</SelectItem>
+                  <SelectItem value="Prefer not to say">Prefer not to say</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        );
 
-            {/* UNIVERSITY */}
+      case 2:
+        return (
+          <div className="space-y-4">
             <div className="space-y-2">
               <Label>University</Label>
-              <Select onValueChange={(v) => handleChange("university", v)}>
-                <SelectTrigger className="w-full"><SelectValue placeholder="Select university" /></SelectTrigger>
+              <Select
+                value={formData.university}
+                onValueChange={(v) => handleChange("university", v)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select university" />
+                </SelectTrigger>
                 <SelectContent>
                   {Object.entries(UNIVERSITY_OPTIONS).map(([k, v]) => (
                     <SelectItem key={k} value={k}>{v}</SelectItem>
@@ -593,17 +267,18 @@ export default function Page() {
                 </SelectContent>
               </Select>
             </div>
-
-            {/* COURSE */}
             <div className="space-y-2">
               <Label>Course</Label>
               <Select
+                value={formData.course}
                 onValueChange={(v) => {
                   handleChange("course", v);
-                  handleChange("subject", null); // ✅ FIXED
+                  handleChange("subject", null);
                 }}
               >
-                <SelectTrigger className="w-full"><SelectValue placeholder="Select course" /></SelectTrigger>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select course" />
+                </SelectTrigger>
                 <SelectContent>
                   {Object.entries(COURSE_OPTIONS).map(([k, v]) => (
                     <SelectItem key={k} value={k}>{v}</SelectItem>
@@ -611,13 +286,16 @@ export default function Page() {
                 </SelectContent>
               </Select>
             </div>
-
-            {/* SUBJECT */}
             {hasSubjects && (
               <div className="space-y-2">
                 <Label>Subject</Label>
-                <Select onValueChange={(v) => handleChange("subject", v)}>
-                  <SelectTrigger className="w-full"><SelectValue placeholder="Select subject" /></SelectTrigger>
+                <Select
+                  value={formData.subject || ""}
+                  onValueChange={(v) => handleChange("subject", v)}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select subject" />
+                  </SelectTrigger>
                   <SelectContent>
                     {SUBJECT_OPTIONS[formData.course].map((subject) => (
                       <SelectItem key={subject} value={subject}>{subject}</SelectItem>
@@ -626,76 +304,221 @@ export default function Page() {
                 </Select>
               </div>
             )}
-
-            {/* GENDER */}
             <div className="space-y-2">
-              <Label>Gender</Label>
-              <Select onValueChange={(v) => handleChange("gender", v)}>
-                <SelectTrigger className="w-full"><SelectValue placeholder="Select gender" /></SelectTrigger>
+              <Label>Are you in last year?</Label>
+              <Select
+                value={formData.is_last_year}
+                onValueChange={(v) => handleChange("is_last_year", v)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Male">Male</SelectItem>
-                  <SelectItem value="Female">Female</SelectItem>
-                  <SelectItem value="Prefer not to say">Prefer not to say</SelectItem>
+                  <SelectItem value="Yes">Yes</SelectItem>
+                  <SelectItem value="No">No</SelectItem>
                 </SelectContent>
               </Select>
             </div>
+          </div>
+        );
 
-            {/* TEXT AREAS */}
-            <Textarea placeholder="Why do you want to become a Department Expert?" onChange={(e) => handleChange("reason", e.target.value)} />
-            <Textarea placeholder="What practical knowledge can you share?" onChange={(e) => handleChange("practical_knowledge", e.target.value)} />
-            <Textarea placeholder="Common mistakes new students make?" onChange={(e) => handleChange("mistakes", e.target.value)} />
-
-            {/* YES / NO */}
-            {[
-              ["Are you in last year?", "is_last_year"],
-              ["Do you agree to provide honest guidance?", "agree_guidance"],
-              ["Do you agree to maintain respectful communication?", "agree_respect"],
-              ["Do you agree Hostel Kit may review interactions?", "agree_review"],
-            ].map(([label, key]) => (
-              <div key={key} className="space-y-2">
-                <Label>{label}</Label>
-                <Select onValueChange={(v) => handleChange(key, v)}>
-                  <SelectTrigger className="w-full"><SelectValue placeholder="Select" /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Yes">Yes</SelectItem>
-                    <SelectItem value="No">No</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            ))}
-
-            {/* UPLOADS */}
+      case 3:
+        return (
+          <div className="space-y-4">
             <div className="space-y-2">
-              <Label>Upload a photo taken at your university (for verification only)</Label>
-              <Input type="file" accept="image/*,.pdf"
-                onChange={(e) => handleChange("verification_document", e.target.files?.[0] || null)}
+              <Label>Why do you want to become a Department Expert?</Label>
+              <Textarea
+                placeholder="Share your motivation..."
+                value={formData.reason}
+                onChange={(e) => handleChange("reason", e.target.value)}
+                rows={3}
               />
             </div>
+            <div className="space-y-2">
+              <Label>What practical knowledge can you share?</Label>
+              <Textarea
+                placeholder="Describe what you can teach..."
+                value={formData.practical_knowledge}
+                onChange={(e) => handleChange("practical_knowledge", e.target.value)}
+                rows={3}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Common mistakes new students make?</Label>
+              <Textarea
+                placeholder="Help juniors avoid common pitfalls..."
+                value={formData.mistakes}
+                onChange={(e) => handleChange("mistakes", e.target.value)}
+                rows={3}
+              />
+            </div>
+          </div>
+        );
 
+      case 4:
+        return (
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>Do you agree to provide honest guidance?</Label>
+              <Select
+                value={formData.agree_guidance}
+                onValueChange={(v) => handleChange("agree_guidance", v)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Yes">Yes</SelectItem>
+                  <SelectItem value="No">No</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>Do you agree to maintain respectful communication?</Label>
+              <Select
+                value={formData.agree_respect}
+                onValueChange={(v) => handleChange("agree_respect", v)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Yes">Yes</SelectItem>
+                  <SelectItem value="No">No</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>Do you agree Hostel Kit may review interactions?</Label>
+              <Select
+                value={formData.agree_review}
+                onValueChange={(v) => handleChange("agree_review", v)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Yes">Yes</SelectItem>
+                  <SelectItem value="No">No</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        );
+
+      case 5:
+        return (
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>Upload a photo taken at your university (for verification)</Label>
+              <Input
+                type="file"
+                accept="image/*,.pdf"
+                onChange={(e) =>
+                  handleChange("verification_document", e.target.files?.[0] || null)
+                }
+              />
+              {formData.verification_document && (
+                <p className="text-xs text-foreground/60">
+                  Selected: {formData.verification_document.name}
+                </p>
+              )}
+            </div>
             <div className="space-y-2">
               <Label>Your Profile Image</Label>
-              <Input type="file" accept="image/*"
-                onChange={(e) => handleChange("department_photo", e.target.files?.[0] || null)}
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={(e) =>
+                  handleChange("department_photo", e.target.files?.[0] || null)
+                }
               />
+              {formData.department_photo && (
+                <p className="text-xs text-foreground/60">
+                  Selected: {formData.department_photo.name}
+                </p>
+              )}
             </div>
-
-            {/* CONFIRMATION */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 pt-2">
               <Checkbox
                 checked={formData.confirmation}
                 onCheckedChange={(v) => handleChange("confirmation", !!v)}
               />
-              <Label>I confirm that the information is accurate</Label>
+              <Label className="cursor-pointer">
+                I confirm that the information is accurate
+              </Label>
             </div>
+          </div>
+        );
 
-            <Button type="submit" className="w-full" disabled={submitting}>
-              {submitting ? "Submitting… please wait" : "Submit Application"}
+      default:
+        return null;
+    }
+  };
+
+  /* ---------------- UI ---------------- */
+
+  return (
+    <div className="min-h-screen bg-background flex items-center justify-center px-4 py-10">
+      <Card className="w-full max-w-lg bg-background text-foreground border border-border shadow-xl">
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl">
+            Department Expert – Hostel Kit
+          </CardTitle>
+          <CardDescription className="text-foreground/70">
+            Step {step} of {TOTAL_STEPS}: {stepTitles[step - 1]}
+          </CardDescription>
+        </CardHeader>
+
+        {/* PROGRESS BAR */}
+        <div className="px-6 pb-4">
+          <div className="flex gap-1">
+            {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
+              <div
+                key={i}
+                className={`h-2 flex-1 rounded-full transition-colors ${
+                  i < step ? "bg-primary" : "bg-muted"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        <CardContent>
+          {/* STEP CONTENT */}
+          <div className="min-h-[280px]">{renderStep()}</div>
+
+          {/* NAVIGATION BUTTONS */}
+          <div className="flex justify-between mt-6 gap-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={prevStep}
+              disabled={step === 1}
+              className="flex-1"
+            >
+              <ChevronLeft className="w-4 h-4 mr-1" />
+              Back
             </Button>
 
-          </form>
+            {step < TOTAL_STEPS ? (
+              <Button type="button" onClick={nextStep} className="flex-1">
+                Next
+                <ChevronRight className="w-4 h-4 ml-1" />
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                onClick={handleSubmit}
+                disabled={submitting}
+                className="flex-1"
+              >
+                {submitting ? "Submitting…" : "Submit"}
+              </Button>
+            )}
+          </div>
         </CardContent>
       </Card>
     </div>
   );
 }
-
