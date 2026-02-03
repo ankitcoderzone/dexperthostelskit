@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -24,6 +25,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 
 const TOTAL_STEPS = 5;
+
 
 export default function Page() {
   const [step, setStep] = useState(1);
