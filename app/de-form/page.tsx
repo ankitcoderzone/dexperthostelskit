@@ -128,40 +128,41 @@ export default function Page() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (submitting) return; // ✅ prevent double submit
-  setSubmitting(true);
+    if (submitting) return; // ✅ prevent double submit
+    setSubmitting(true);
 
-  const form = new FormData();
-  Object.entries(formData).forEach(([key, value]) => {
-    if (value !== null) {
-      form.append(key, value as any);
-    }
-  });
-
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-  try {
-    const res = await fetch(
-      `${API_BASE_URL}/api/department-expert/apply/`,
-      {
-        method: "POST",
-        body: form,
+    const form = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value !== null && value !== "") {
+        form.append(key, value as any);
       }
-    );
 
-    if (res.ok) {
-      alert("Application submitted successfully");
-    } else {
-      alert("Something went wrong");
-      setSubmitting(false); // ❌ re-enable on failure
+    });
+
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+    try {
+      const res = await fetch(
+        `${API_BASE_URL}/api/department-expert/apply/`,
+        {
+          method: "POST",
+          body: form,
+        }
+      );
+
+      if (res.ok) {
+        alert("Application submitted successfully");
+      } else {
+        alert("Something went wrong");
+        setSubmitting(false); // ❌ re-enable on failure
+      }
+    } catch (err) {
+      alert("Network error");
+      setSubmitting(false); // ❌ re-enable on error
     }
-  } catch (err) {
-    alert("Network error");
-    setSubmitting(false); // ❌ re-enable on error
-  }
-};
+  };
 
 
   /* ---------------- UI ---------------- */
