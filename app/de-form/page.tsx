@@ -302,7 +302,7 @@ export default function Page() {
 
             {/* Uploads */}
             <div className="space-y-2">
-              <Label>Verification Document</Label>
+              <Label>Upload a photo taken at your university (for verification purposes only).</Label>
               <Input
                 type="file"
                 accept="image/*,.pdf"
@@ -317,7 +317,7 @@ export default function Page() {
             </div>
 
             <div className="space-y-2">
-              <Label>Department Photo</Label>
+              <Label>Your Profile Image</Label>
               <Input
                 type="file"
                 accept="image/*"
