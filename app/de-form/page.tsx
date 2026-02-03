@@ -184,6 +184,8 @@ export default function Page() {
 
       if (res.ok) {
         toast.success("Application submitted successfully");
+        setSubmitting(true);
+        return;
       } else {
         const err = await res.text();
         toast.error(err || "Something went wrong");
