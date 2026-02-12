@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import ContactNow from "@/components/ContactNow";
 
 export default function DiscoverDepartmentExpert() {
     const [formData, setFormData] = useState({
@@ -46,6 +47,7 @@ export default function DiscoverDepartmentExpert() {
         BCOM: "Bachelor of Commerce",
         BTECH: "B.TECH",
     };
+    
 
     const SUBJECT_OPTIONS: Record<string, string[]> = {
         BSC: ["Mathematics", "Physics", "Chemistry", "Zoology", "Botany", "Statistics"],
@@ -321,9 +323,7 @@ export default function DiscoverDepartmentExpert() {
                                     {expert.subject}
                                 </p>
 
-                                <button className="rounded-lg border border-border px-5 py-2 text-sm transition hover:bg-foreground hover:text-background">
-                                    Contact Now
-                                </button>
+                 <ContactNow name={expert.name}  course={expert.course_name} subject={expert.subject}   />
                             </div>
                         ))}
                     </div>
