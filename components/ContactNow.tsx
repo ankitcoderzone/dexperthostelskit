@@ -15,6 +15,14 @@ import { Input } from './ui/input'
 import { Label } from './ui/label'
 import { Textarea } from './ui/textarea'
 
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from './ui/select'
+
 interface Props {
     name: string,
     course: string,
@@ -45,6 +53,12 @@ function ContactNow(props: Props) {
 
     const handleOneclick = async (e: React.FormEvent) => {
         e.preventDefault()
+
+        if (!time) {
+            toast.error("Please select a preferred time")
+            return
+        }
+
         setIsSubmitting(true)
 
         try {
@@ -136,14 +150,15 @@ function ContactNow(props: Props) {
                         <Label htmlFor="time" className="text-right">
                             Preferred Time
                         </Label>
-                        <Input
-                            id="time"
-                            placeholder="e.g. 5 PM - 7 PM"
-                            value={time}
-                            onChange={(e) => setTime(e.target.value)}
-                            className="col-span-3"
-                            required
-                        />
+                        <Select value={time} onValueChange={setTime} required>
+                            <SelectTrigger id="time" className="col-span-3 w-full">
+                                <SelectValue placeholder="Select a time slot" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="1 PM - 2 PM">1 PM - 2 PM</SelectItem>
+                                <SelectItem value="6 PM - 9 PM">6 PM - 9 PM</SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
                     <div className="grid grid-cols-4 items-start gap-4">
                         <Label htmlFor="why" className="text-right mt-2">
