@@ -47,7 +47,7 @@ export default function DiscoverDepartmentExpert() {
         BCOM: "Bachelor of Commerce",
         BTECH: "B.TECH",
     };
-    
+
 
     const SUBJECT_OPTIONS: Record<string, string[]> = {
         BSC: ["Mathematics", "Physics", "Chemistry", "Zoology", "Botany", "Statistics"],
@@ -323,7 +323,13 @@ export default function DiscoverDepartmentExpert() {
                                     {expert.subject}
                                 </p>
 
-                 <ContactNow name={expert.name}  course={expert.course_name} subject={expert.subject}   />
+                                {/* <ContactNow name={expert.name}  course={expert.course_name} subject={expert.subject}   /> */}
+                                <ContactNow
+                                    expertId={expert.id}
+                                    name={expert.name}
+                                    course={expert.course}
+                                    subject={expert.subject}
+                                />
                             </div>
                         ))}
                     </div>

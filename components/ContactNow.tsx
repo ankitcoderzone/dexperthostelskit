@@ -1,3 +1,191 @@
+// "use client"
+
+// import React, { useState } from 'react'
+// import { Button } from './ui/button'
+// import { toast } from 'sonner'
+// import {
+//     Dialog,
+//     DialogContent,
+//     DialogHeader,
+//     DialogTitle,
+//     DialogTrigger,
+//     DialogFooter,
+// } from './ui/dialog'
+// import { Input } from './ui/input'
+// import { Label } from './ui/label'
+// import { Textarea } from './ui/textarea'
+
+// import {
+//     Select,
+//     SelectContent,
+//     SelectItem,
+//     SelectTrigger,
+//     SelectValue,
+// } from './ui/select'
+
+// interface Props {
+//     name: string,
+//     course: string,
+//     subject: string
+// }
+
+// interface userInfo {
+//     UserName: string,
+//     No: number,
+//     city: string,
+//     why: string,
+//     time: string
+// }
+
+// function ContactNow(props: Props) {
+//     const { name, course, subject } = props
+
+//     const [open, setOpen] = useState(false)
+
+//     // Individual state hooks for each field in userInfo
+//     const [userName, setUserName] = useState("")
+//     const [no, setNo] = useState<number | "">("")
+//     const [city, setCity] = useState("")
+//     const [why, setWhy] = useState("")
+//     const [time, setTime] = useState("")
+
+//     const [isSubmitting, setIsSubmitting] = useState(false)
+
+//     const handleOneclick = async (e: React.FormEvent) => {
+//         e.preventDefault()
+
+//         if (!time) {
+//             toast.error("Please select a preferred time")
+//             return
+//         }
+
+//         setIsSubmitting(true)
+
+//         try {
+//             const body = {
+//                 UserName: userName,
+//                 No: no,
+//                 city: city,
+//                 why: why,
+//                 time: time,
+//                 // Including context from props if needed by the backend
+//                 expertName: name,
+//                 expertCourse: course,
+//                 expertSubject: subject
+//             }
+
+//             // Example of sending via body (assuming endpoint exists or for user to see pattern)
+//             console.log("Sending data via body:", body)
+
+//             // Simulate API call
+//             await new Promise(resolve => setTimeout(resolve, 1000))
+
+//             toast.success("Request sent successfully!")
+//             setOpen(false)
+
+//             // Reset fields
+//             setUserName("")
+//             setNo("")
+//             setCity("")
+//             setWhy("")
+//             setTime("")
+
+//         } catch (error) {
+//             toast.error("something went wrong ")
+//         } finally {
+//             setIsSubmitting(false)
+//         }
+//     }
+
+//     return (
+//         <Dialog open={open} onOpenChange={setOpen}>
+//             <DialogTrigger asChild>
+//                 <Button>
+//                     Contact Now
+//                 </Button>
+//             </DialogTrigger>
+//             <DialogContent className="sm:max-w-[425px]">
+//                 <DialogHeader>
+//                     <DialogTitle>Contact {name}</DialogTitle>
+//                 </DialogHeader>
+//                 <form onSubmit={handleOneclick} className="grid gap-4 py-4">
+//                     <div className="grid grid-cols-4 items-center gap-4">
+//                         <Label htmlFor="userName" className="text-right">
+//                             Name
+//                         </Label>
+//                         <Input
+//                             id="userName"
+//                             value={userName}
+//                             onChange={(e) => setUserName(e.target.value)}
+//                             className="col-span-3"
+//                             required
+//                         />
+//                     </div>
+//                     <div className="grid grid-cols-4 items-center gap-4">
+//                         <Label htmlFor="no" className="text-right">
+//                             Phone
+//                         </Label>
+//                         <Input
+//                             id="no"
+//                             type="number"
+//                             value={no}
+//                             onChange={(e) => setNo(e.target.value === "" ? "" : Number(e.target.value))}
+//                             className="col-span-3"
+//                             required
+//                         />
+//                     </div>
+//                     <div className="grid grid-cols-4 items-center gap-4">
+//                         <Label htmlFor="city" className="text-right">
+//                             City
+//                         </Label>
+//                         <Input
+//                             id="city"
+//                             value={city}
+//                             onChange={(e) => setCity(e.target.value)}
+//                             className="col-span-3"
+//                             required
+//                         />
+//                     </div>
+//                     <div className="grid grid-cols-4 items-center gap-4">
+//                         <Label htmlFor="time" className="text-right">
+//                             Preferred Time
+//                         </Label>
+//                         <Select value={time} onValueChange={setTime} required>
+//                             <SelectTrigger id="time" className="col-span-3 w-full">
+//                                 <SelectValue placeholder="Select a time slot" />
+//                             </SelectTrigger>
+//                             <SelectContent>
+//                                 <SelectItem value="1 PM - 2 PM">1 PM - 2 PM</SelectItem>
+//                                 <SelectItem value="6 PM - 9 PM">6 PM - 9 PM</SelectItem>
+//                             </SelectContent>
+//                         </Select>
+//                     </div>
+//                     <div className="grid grid-cols-4 items-start gap-4">
+//                         <Label htmlFor="why" className="text-right mt-2">
+//                             Why?
+//                         </Label>
+//                         <Textarea
+//                             id="why"
+//                             placeholder="Briefly describe what you want to discuss"
+//                             value={why}
+//                             onChange={(e) => setWhy(e.target.value)}
+//                             className="col-span-3 min-h-[80px]"
+//                             required
+//                         />
+//                     </div>
+//                     <DialogFooter>
+//                         <Button type="submit" disabled={isSubmitting}>
+//                             {isSubmitting ? "Sending..." : "Submit Request"}
+//                         </Button>
+//                     </DialogFooter>
+//                 </form>
+//             </DialogContent>
+//         </Dialog>
+//     )
+// }
+
+// export default ContactNow
+
 "use client"
 
 import React, { useState } from 'react'
@@ -14,7 +202,6 @@ import {
 import { Input } from './ui/input'
 import { Label } from './ui/label'
 import { Textarea } from './ui/textarea'
-
 import {
     Select,
     SelectContent,
@@ -24,34 +211,28 @@ import {
 } from './ui/select'
 
 interface Props {
-    name: string,
-    course: string,
+    expertId: number
+    name: string
+    course: string
     subject: string
 }
 
-interface userInfo {
-    UserName: string,
-    No: number,
-    city: string,
-    why: string,
-    time: string
-}
-
 function ContactNow(props: Props) {
-    const { name, course, subject } = props
+    const { expertId, name } = props
 
     const [open, setOpen] = useState(false)
 
-    // Individual state hooks for each field in userInfo
     const [userName, setUserName] = useState("")
-    const [no, setNo] = useState<number | "">("")
+    const [phone, setPhone] = useState("")
     const [city, setCity] = useState("")
-    const [why, setWhy] = useState("")
+    const [message, setMessage] = useState("")
     const [time, setTime] = useState("")
 
     const [isSubmitting, setIsSubmitting] = useState(false)
 
-    const handleOneclick = async (e: React.FormEvent) => {
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
         if (!time) {
@@ -62,36 +243,43 @@ function ContactNow(props: Props) {
         setIsSubmitting(true)
 
         try {
-            const body = {
-                UserName: userName,
-                No: no,
-                city: city,
-                why: why,
-                time: time,
-                // Including context from props if needed by the backend
-                expertName: name,
-                expertCourse: course,
-                expertSubject: subject
+            const response = await fetch(
+                `${API_BASE_URL}/api/contact-expert/`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        expert_id: expertId,
+                        user_name: userName,
+                        phone: phone,
+                        city: city,
+                        message: message,
+                        preferred_time: time,
+                    }),
+                }
+            )
+
+            if (!response.ok) {
+                const errorText = await response.text()
+                console.error("Server error:", errorText)
+                throw new Error("Failed to send request")
             }
-
-            // Example of sending via body (assuming endpoint exists or for user to see pattern)
-            console.log("Sending data via body:", body)
-
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000))
 
             toast.success("Request sent successfully!")
             setOpen(false)
 
-            // Reset fields
+            // Reset form
             setUserName("")
-            setNo("")
+            setPhone("")
             setCity("")
-            setWhy("")
+            setMessage("")
             setTime("")
 
         } catch (error) {
-            toast.error("something went wrong ")
+            console.error(error)
+            toast.error("Something went wrong. Please try again.")
         } finally {
             setIsSubmitting(false)
         }
@@ -104,80 +292,79 @@ function ContactNow(props: Props) {
                     Contact Now
                 </Button>
             </DialogTrigger>
+
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>Contact {name}</DialogTitle>
                 </DialogHeader>
-                <form onSubmit={handleOneclick} className="grid gap-4 py-4">
+
+                <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="userName" className="text-right">
-                            Name
-                        </Label>
+                        <Label className="text-right">Name</Label>
                         <Input
-                            id="userName"
                             value={userName}
                             onChange={(e) => setUserName(e.target.value)}
                             className="col-span-3"
                             required
                         />
                     </div>
+
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="no" className="text-right">
-                            Phone
-                        </Label>
+                        <Label className="text-right">Phone</Label>
                         <Input
-                            id="no"
-                            type="number"
-                            value={no}
-                            onChange={(e) => setNo(e.target.value === "" ? "" : Number(e.target.value))}
+                            type="tel"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
                             className="col-span-3"
                             required
                         />
                     </div>
+
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="city" className="text-right">
-                            City
-                        </Label>
+                        <Label className="text-right">City</Label>
                         <Input
-                            id="city"
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
                             className="col-span-3"
                             required
                         />
                     </div>
+
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="time" className="text-right">
-                            Preferred Time
-                        </Label>
-                        <Select value={time} onValueChange={setTime} required>
-                            <SelectTrigger id="time" className="col-span-3 w-full">
-                                <SelectValue placeholder="Select a time slot" />
+                        <Label className="text-right">Preferred Time</Label>
+                        <Select value={time} onValueChange={setTime}>
+                            <SelectTrigger className="col-span-3 w-full">
+                                <SelectValue placeholder="Select time slot" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="1 PM - 2 PM">1 PM - 2 PM</SelectItem>
-                                <SelectItem value="6 PM - 9 PM">6 PM - 9 PM</SelectItem>
+                                <SelectItem value="1 PM - 2 PM">
+                                    1 PM - 2 PM
+                                </SelectItem>
+                                <SelectItem value="6 PM - 9 PM">
+                                    6 PM - 9 PM
+                                </SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
+
                     <div className="grid grid-cols-4 items-start gap-4">
-                        <Label htmlFor="why" className="text-right mt-2">
-                            Why?
-                        </Label>
+                        <Label className="text-right mt-2">Why?</Label>
                         <Textarea
-                            id="why"
                             placeholder="Briefly describe what you want to discuss"
-                            value={why}
-                            onChange={(e) => setWhy(e.target.value)}
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
                             className="col-span-3 min-h-[80px]"
                             required
                         />
                     </div>
+
                     <DialogFooter>
                         <Button type="submit" disabled={isSubmitting}>
                             {isSubmitting ? "Sending..." : "Submit Request"}
                         </Button>
                     </DialogFooter>
+
                 </form>
             </DialogContent>
         </Dialog>
@@ -185,4 +372,3 @@ function ContactNow(props: Props) {
 }
 
 export default ContactNow
-
