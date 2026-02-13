@@ -13,7 +13,7 @@ export default function Home() {
 
         {/* Logo */}
         <Image
-          src="/hostelskit.png"
+          src="/departmentexpert.png"
           alt="Hostel Kit logo"
           width={140}
           height={140}

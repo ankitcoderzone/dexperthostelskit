@@ -13,7 +13,7 @@ export default function Header() {
         {/* LOGO */}
         <div className="flex items-center gap-2 ml-0.5">
           <Image
-            src="/hostelskit.png"
+            src="/departmentexpert.png"
             alt="logo"
             width={50}
             height={50}
