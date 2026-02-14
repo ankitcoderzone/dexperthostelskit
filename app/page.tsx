@@ -14,7 +14,7 @@ export default function Home() {
         {/* Logo */}
         <Image
           src="/departmentexpert.png"
-          alt="Hostel Kit logo"
+          alt="department expert logo"
           width={140}
           height={140}
           className="rounded-full border border-black"
@@ -22,7 +22,7 @@ export default function Home() {
 
         {/* H1 */}
         <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
-          Department Expert by Hostel Kit
+          Department Expert
         </h1>
 
         {/* Description */}
@@ -86,7 +86,7 @@ export default function Home() {
             Make confident decisions about your future
           </h2>
           <p className="text-lg leading-relaxed">
-            Hostel Kit helps students bridge the gap between confusion and
+            Department Expert helps students bridge the gap between confusion and
             clarity through trusted department experts.
           </p>
           <ButtonNavigationClient />
