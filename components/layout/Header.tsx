@@ -34,7 +34,7 @@ export default function Header() {
           <Button  variant="ghost" asChild>
             <Link href="https://hostelskit.com">About</Link>
           </Button>
-          <Button variant="outline" asChild>
+          <Button variant="ghost" asChild>
             <Link href="https://hostelskit.com">Contacts</Link>
           </Button>
         </nav>
