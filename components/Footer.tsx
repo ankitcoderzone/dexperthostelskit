@@ -141,7 +141,7 @@ export default function Footer() {
         {/* LANGUAGE + COPYRIGHT */}
         <div className="mt-4 flex flex-wrap justify-center gap-4 text-xs text-gray-500">
           <span>English</span>
-          <span>© {new Date().getFullYear()} Department Expert | Hostel Kit</span>
+          <span>© {new Date().getFullYear()} Department Expert</span>
         </div>
 
       </div>

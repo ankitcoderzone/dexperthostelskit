@@ -414,7 +414,7 @@ export default function Page() {
         return (
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label>Upload a photo taken at your university (for verification)</Label>
+              <Label>Upload any valid ID of your university (for verification)</Label>
               <Input
                 type="file"
                 accept="image/*,.pdf"
@@ -429,7 +429,7 @@ export default function Page() {
               )}
             </div>
             <div className="space-y-2">
-              <Label>Your Profile Image</Label>
+              <Label>Your Profile Image(Image taken inside University)</Label>
               <Input
                 type="file"
                 accept="image/*"
