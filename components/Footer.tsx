@@ -135,7 +135,8 @@ export default function Footer() {
           <Link href="#" className="hover:underline">Privacy</Link>
           <Link href="#" className="hover:underline">Terms</Link>
           <Link href="#" className="hover:underline">Locations</Link>
-          <Link href="https://www.instagram.com/hostelskit" className="hover:underline">Instagram</Link>
+          <Link href="https://www.instagram.com/departmentexpert" className="hover:underline">Instagram</Link>
+          <Link href="https://www.youtube.com/channel/UCGX4Mn4DO8REg0xvhN-OtEw" className="hover:underline">Youtube</Link>
         </div>
 
         {/* LANGUAGE + COPYRIGHT */}
