@@ -60,7 +60,9 @@ export default function Page() {
     BSC: "Bachelor of Science",
     BA: "Bachelor of Arts",
     BCA: "Bachelor of Computer Application",
+    BVoc: "Bachelor of Vocational Education",
     BFA: "Bachelor of Fine Arts",
+    MA: "Master of Arts",
     MCA: "Master of Computer Application",
     MCABCA: "Five Year Integrated BCA & MCA (Data Science)",
     MSC: "Master of Science",
@@ -73,6 +75,7 @@ export default function Page() {
     BSC: ["Mathematics", "Physics", "Chemistry", "Zoology", "Botany", "Statistics"],
     BA: ["History", "Political Science", "Economics", "Sociology", "Hindi", "English"],
     BTECH: ["Computer Sc. and Engineering", "Electronics and Comm. Engineering"],
+    BVoc:  ["Software Development", "Food Processing and Technology", "Media Production"],
     MSC: [
       "Mathematics", "Physics", "Statistics", "Zoology", "Cognitive Science",
       "Materials Science", "Food Technology", "Bioinformatics", "Biotechnology",

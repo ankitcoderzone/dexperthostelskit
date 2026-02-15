@@ -55,6 +55,7 @@ export default function DiscoverDepartmentExpert() {
         BSC: ["Mathematics", "Physics", "Chemistry", "Zoology", "Botany", "Statistics"],
         BA: ["History", "Political Science", "Economics", "Sociology", "Hindi", "English"],
         BTECH: ["Computer Sc. and Engineering", "Electronics and Comm. Engineering"],
+        BVoc:  ["Software Development", "Food Processing and Technology", "Media Production"],
         MSC: [
             "Mathematics",
             "Physics",
