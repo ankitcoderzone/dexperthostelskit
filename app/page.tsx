@@ -2,6 +2,7 @@
 
 
 import ButtonNavigationClient from "@/components/home/ButtonNavigationClient";
+import ApprovedExperts from "@/components/home/ApprovedExperts";
 import Image from "next/image";
 
 export default function Home() {
@@ -36,6 +37,8 @@ export default function Home() {
         <div className="pt-4">
           <ButtonNavigationClient />
         </div>
+        <ApprovedExperts />
+
       </section>
 
       {/* ---------- FEATURES ---------- */}
