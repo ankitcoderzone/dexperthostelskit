@@ -19,7 +19,7 @@ async function getExperts(): Promise<Expert[]> {
   const res = await fetch(
     `${BASE_URL}/api/approved-experts/`,
     {
-      next: { revalidate: 86400 }, // 24h cache
+      next: { revalidate: 3600 }, // 24h cache
     }
   );
 
