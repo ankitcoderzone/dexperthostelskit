@@ -129,7 +129,7 @@ export default function Footer() {
         {/* LINKS */}
         <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs">
           <Link href="http://www.hostelskit.com" className="hover:underline">Hostel kit</Link>
-          <Link href="#" className="hover:underline">About</Link>
+          <Link href="/about-department-expert" className="hover:underline">About</Link>
           <Link href="http://www.hostelskit.com/blog" className="hover:underline">Blog</Link>
           <Link href="mailto:ankit.algoskool@gmail.com" className="hover:underline">Help</Link>
           <Link href="#" className="hover:underline">Privacy</Link>

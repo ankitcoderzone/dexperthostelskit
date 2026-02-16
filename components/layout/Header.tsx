@@ -32,10 +32,10 @@ export default function Header() {
         {/* DESKTOP NAV */}
         <nav className="hidden md:flex items-center gap-4">
           <Button  variant="ghost" asChild>
-            <Link href="https://hostelskit.com">About</Link>
+            <Link href="/about-department-expert">About</Link>
           </Button>
           <Button variant="ghost" asChild>
-            <Link href="https://hostelskit.com">Contacts</Link>
+            <Link href="/contact">Contacts</Link>
           </Button>
         </nav>
 
@@ -52,13 +52,13 @@ export default function Header() {
               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
               <nav className="flex flex-col items-center justify-center gap-6 py-8">
                 <Link
-                  href="https://hostelskit.com"
+                  href="/about-department-expert"
                   className="text-lg font-medium hover:text-primary transition-colors"
                 >
                   About
                 </Link>
                 <Link
-                  href="https://hostelskit.com"
+                  href="/contact"
                   className="text-lg font-medium hover:text-primary transition-colors"
                 >
                   Contacts
