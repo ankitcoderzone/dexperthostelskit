@@ -396,7 +396,7 @@ export default function Page() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Do you agree Hostel Kit may review interactions?</Label>
+              <Label>Do you agree Department expert team may review interactions?</Label>
               <Select
                 value={formData.agree_review}
                 onValueChange={(v) => handleChange("agree_review", v)}

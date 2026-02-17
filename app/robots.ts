@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://departmentexpert.hostelskit.com/sitemap.xml",
+    sitemap: "https://departmentexpert.com/sitemap.xml",
   };
 }

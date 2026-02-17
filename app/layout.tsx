@@ -20,30 +20,34 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Department Expert | Hostel Kit",
+    default: "Department Expert - Verified University Admission Guidance by Seniors",
     template: "%s | Hostel Kit",
   },
   description:
-    "Department Expert by Hostel Kit helps students get verified guidance from seniors about courses, hostels, universities, and campus life.",
+    "Stop Guessing Your Admission. Talk to Someone Who’s Already Been There.",
   keywords: [
     "department expert",
-    "hostel kit",
-    "hostelskit",
-    "de hostel kit",
-    "kit hostel",
-    "hostels kit",
+    "department expert cuet",
+    "department expert guidance",
+    "de",
+    "expert for university",
+    "department expert allahabad university",
     "student guidance",
     "university hostel",
     "course guidance",
   ],
-  metadataBase: new URL("https://departmentexpert.hostelskit.com"),
+  metadataBase: new URL("https://departmentexpert.com"),
+
+  alternates: {
+    canonical: "/",
+  },
 
   openGraph: {
-    title: "Department Expert | Hostel Kit",
+    title: "Department Expert - Verified University Admission Guidance by Seniors",
     description:
-      "Get honest, verified guidance from department experts at Hostel Kit. Choose the right course, hostel, and university.",
-    url: "https://departmentexpert.hostelskit.com",
-    siteName: "Hostel Kit",
+      "Get real-time insights, document clarity, and personalized support from seniors who’ve already navigated your university and course",
+    url: "https://departmentexpert.com",
+    siteName: "Department Expert",
     type: "website",
   },
 
