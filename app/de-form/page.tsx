@@ -470,7 +470,7 @@ export default function Page() {
       <Card className="w-full max-w-lg bg-background text-foreground border border-border shadow-xl">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">
-            Department Expert – Hostel Kit
+            Department Expert – Apply
           </CardTitle>
           <CardDescription className="text-foreground/70">
             Step {step} of {TOTAL_STEPS}: {stepTitles[step - 1]}
