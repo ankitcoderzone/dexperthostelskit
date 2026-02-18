@@ -49,7 +49,7 @@ export default function FeedbackForm() {
 
                     <p className="text-lg leading-relaxed">
                         Department Expert is already connecting students with verified seniors
-                        across universities. Our platform is fully functional and continuously
+                        across Universities. Our platform is fully functional and continuously
                         expanding with new departments and experts.
                     </p>
 
