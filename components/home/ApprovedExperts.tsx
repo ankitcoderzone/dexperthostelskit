@@ -21,7 +21,7 @@ async function getExperts(): Promise<Expert[]> {
   }
 
   const res = await fetch(`${BASE_URL}/api/approved-experts/`, {
-    cache: "force-cache",   // ⬅️ hard cache
+    cache: "force-cache",   
   });
 
   if (!res.ok) {
@@ -56,7 +56,7 @@ export default async function ApprovedExperts() {
           Approved Department Experts
         </h3>
         <p className="text-gray-500 mt-3">
-          Connect with verified seniors from top universities
+          Connect with verified seniors from top Universities
         </p>
       </div>
 
