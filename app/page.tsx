@@ -2,7 +2,7 @@
 
 
 import ButtonNavigationClient from "@/components/home/ButtonNavigationClient";
-import ApprovedExperts from "@/components/home/ApprovedExperts";
+// import ApprovedExperts from "@/components/home/ApprovedExperts";
 import FeedbackForm from "@/components/home/FeedbackForm";
 import Image from "next/image";
 
@@ -39,7 +39,7 @@ export default function Home() {
           <ButtonNavigationClient />
         </div>
 
-        <ApprovedExperts />
+        {/* <ApprovedExperts /> */}
       </section>
 
       {/* ---------- FEATURES ---------- */}
