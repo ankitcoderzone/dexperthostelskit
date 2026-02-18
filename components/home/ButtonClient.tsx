@@ -7,10 +7,10 @@ function ButtonClient() {
     <>
       <div className="md:block lg:flex  gap-4">
         <Button variant={"default"}>
-          <Link href={"https://hostelskit.com"}>About</Link>
+          <Link href={"/about-department-expert"}>About</Link>
         </Button>
         <Button variant={"secondary"}>
-          <Link href={"https://hostelskit.com"}>Contacts</Link>
+          <Link href={"/contact"}>Contacts</Link>
         </Button>
       </div>
     </>
