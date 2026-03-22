@@ -54,6 +54,7 @@ export default function Page() {
 
   const UNIVERSITY_OPTIONS = {
     UOA: "University of Allahabad",
+    BHU: "Banaras Hindu University",
   };
 
   const COURSE_OPTIONS = {
