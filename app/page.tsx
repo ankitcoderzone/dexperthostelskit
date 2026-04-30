@@ -41,6 +41,47 @@ export default function Home() {
 
         <ApprovedExperts />
       </section>
+      {/* ---------- PROBLEM SECTION ---------- */}
+      <section className="w-full bg-gray-50 border-y border-black py-20">
+        <div className="max-w-5xl mx-auto px-4 text-center space-y-8">
+
+          <h2 className="text-3xl sm:text-4xl font-bold leading-tight">
+            Students don’t lack ambition — they lack guidance
+          </h2>
+
+          <p className="text-lg sm:text-xl leading-relaxed max-w-3xl mx-auto">
+            Every year, thousands of students leave school and enter universities or
+            self-directed paths without clear direction, mentorship, or reliable advice.
+            They rely on random opinions, outdated information, or trial-and-error —
+            leading to confusion, wrong decisions, and wasted time.
+          </p>
+
+          {/* Insight Card */}
+          <div className="border border-black bg-white p-8 text-left max-w-3xl mx-auto">
+            <h3 className="text-xl font-semibold mb-4">
+              The Reality (Observed Problem)
+            </h3>
+
+            <ul className="space-y-3 text-base leading-relaxed">
+              <li>• No structured guidance after leaving school</li>
+              <li>• No access to real seniors with actual experience</li>
+              <li>• Decisions based on guesswork or social media</li>
+              <li>• Lack of clarity about courses, hostels, and career paths</li>
+            </ul>
+
+            <div className="mt-6 pt-4 border-t border-black flex justify-between text-sm">
+              <span><strong>Severity:</strong> High</span>
+              <span><strong>Frequency:</strong> Very High</span>
+              <span><strong>Gap:</strong> Huge</span>
+            </div>
+          </div>
+
+          <p className="text-lg font-medium">
+            This is exactly the gap Department Expert solves.
+          </p>
+
+        </div>
+      </section>
 
       {/* ---------- FEATURES ---------- */}
       <section className="max-w-6xl mx-auto px-4 pb-28">
